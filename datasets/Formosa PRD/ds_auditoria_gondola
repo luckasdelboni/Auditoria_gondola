@@ -1,0 +1,63 @@
+function createDataset(fields, constraints, sortFields) {
+	log.info("[DATASET PRESENCA DE GONDOLA]");
+	/**
+	 * Metodo Consultar Item
+	 * Parametros (Nome Metodo, Codigo de Barra, Codigo Filial)
+	 * Retorno: Dados do Produto (Descriçao, Codigo de Barra, Codigo, Digito, Seçao, Grupo, Subgrupo, Categoria, Estoque)
+	 */
+	if(constraints[0].fieldName == "CONSULTAR_ITEM") {
+		log.info("[DATASET PRESENCA DE GONDOLA] Iniciando consulta do Item por Codigo de Barras: " + constraints[1].initialValue);
+		var query = "select i.git_descricao ITEM_DESCRICAO, i.git_codigo_ean13 ITEM_EAN, i.git_cod_item ITEM_CODIGO, i.git_digito ITEM_DIGITO, " +
+			"i.git_secao ITEM_SECAO, i.git_grupo ITEM_GRUPO, i.git_subgrupo ITEM_SUBGRUPO, i.git_categoria ITEM_CATEGORIA, " +
+			"(select e.get_estoque from aa2cestq e where e.get_cod_produto = i.git_cod_item||i.git_digito and e.get_cod_local = " + constraints[2].initialValue + ") ESTOQUE " +
+			"from aa3citem i where i.git_codigo_ean13 = '" + constraints[1].initialValue + "'";
+		//return DatasetFactory.getDataset("ds_sql_rms_homol_desenv", [query], null, null);
+		return DatasetFactory.getDataset("ds_sql_ti_guests_rms", [query], null, null);
+	}
+	/**
+	 * Metodo Consultar Lista de Produtos na Base de Dados
+	 * Parametros (Filial com DV, Departamento, Seçao, Grupo, Subgrupo e Categoria)
+	 * Retorno: Dados do Produto e seu Estoque de acordo com a Filial enviada.
+	 */
+	else if(constraints[0].fieldName == "CONSULTAR_LISTA_BASE") {
+		log.info("[DATASET PRESENCA DE GONDOLA] Iniciando consulta dos Itens em Linha e com Estoque na Base");
+		var query = "SELECT i.git_cod_item CODIGO, i.git_digito DIGITO, e.get_estoque ESTOQUE, i.git_codigo_ean13 EAN13, TRIM(i.git_descricao) DESCRICAO, " +
+			"TRIM(i.git_referencia) REFERENCIA, i.git_emb_venda EMB_VENDA, i.git_tpo_emb_venda TIPO_EMB_VENDA, i.git_linha LINHA, i.git_depto COD_DEPTO, " +
+			"TRIM(rms.get_rmsdepartamento(i.git_depto)) DEPARTAMENTO, i.git_secao COD_SECAO, TRIM(rms.get_rmssecao(i.git_secao)) SECAO, i.git_grupo COD_GRUPO, " +
+			"TRIM(rms.get_rmsgrupo(i.git_secao,i.git_grupo)) GRUPO, i.git_subgrupo COD_SUBGRUPO, TRIM(rms.get_rmssubgrupo(i.git_secao,i.git_grupo,i.git_subgrupo)) SUBGRUPO, " +
+			"i.git_categoria COD_CATEGORIA, TRIM(rms.get_rmscategoria(i.git_secao,i.git_grupo,i.git_subgrupo,i.git_categoria)) CATEGORIA, i.git_cod_for COD_FORN, " +
+			"rms.rms7to_date(rms.rms6to_rms7(i.git_dat_ent_lin)) DATA_ENT_LINHA, rms.rms7to_date(rms.rms6to_rms7(i.git_dat_sai_lin)) DATA_SAI_LINHA " +
+			"FROM rms.aa3citem i, rms.aa2cestq e WHERE i.git_dat_sai_lin = 0 and i.git_cod_item||i.git_digito = e.get_cod_produto ";
+		if(constraints != null) {
+			for (var i = 0; i < constraints.length; i++) {
+				if(constraints[i].fieldName == 'VALIDAR_ESTOQUE' && constraints[i].initialValue != '') {
+					query += " and e.get_estoque > " + constraints[i].initialValue;
+				}
+				if(constraints[i].fieldName == 'FILIAL_DV' && constraints[i].initialValue != '') {
+					query += " and e.get_cod_local = " + constraints[i].initialValue;
+				}
+				if(constraints[i].fieldName == 'DEPARTAMENTO' && constraints[i].initialValue != '') {
+					query += " and i.git_depto = " + constraints[i].initialValue;
+				}
+				if(constraints[i].fieldName == 'SECAO' && constraints[i].initialValue != '') {
+					query += " and i.git_secao = " + constraints[i].initialValue;
+				}
+				if(constraints[i].fieldName == 'GRUPO' && constraints[i].initialValue != '') {
+					query += " and i.git_grupo = " + constraints[i].initialValue;
+				}
+				if(constraints[i].fieldName == 'SUBGRUPO' && constraints[i].initialValue != '') {
+					query += " and i.git_subgrupo = " + constraints[i].initialValue;
+				}
+				if(constraints[i].fieldName == 'CATEGORIA' && constraints[i].initialValue != '') {
+					query += " and i.git_categoria = " + constraints[i].initialValue;
+				}
+				if(constraints[i].fieldName == 'CODIGO_ITEM' && constraints[i].initialValue != '') {
+					query += " and i.git_cod_item = " + constraints[i].initialValue;
+				}
+			}
+		}
+		query += " and i.git_cod_for not in (17691) order by TRIM(i.git_descricao)";
+		//return DatasetFactory.getDataset("ds_sql_rms_homol_desenv", [query], null, null);
+		return DatasetFactory.getDataset("ds_sql_ti_guests_rms", [query], null, null);
+	}
+}
