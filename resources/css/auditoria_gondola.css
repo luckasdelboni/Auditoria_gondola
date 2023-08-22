@@ -1,0 +1,349 @@
+/* Coloque aqui seu codigo CSS */
+.tr-dtable-existepar{
+  background-color: #ef9a9a !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.tr-dtable-existeparparcial{
+  background-color: #f7df69 !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.tr-dtable-existeparok{
+  background-color: #d3ffe6 !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.tr-auditadook{
+  background-color: #d3ffe6 !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.tr-divergente{
+  background-color: #f7df69 !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.tr-existe-cadcentral{
+  background-color: #d3ffe6 !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+input[type="text"], textarea{
+  background-color : #d1d1d1; 
+}
+
+.bootstrap-datetimepicker-widget table td.disabled,
+.bootstrap-datetimepicker-widget table td.disabled:hover {
+  background: rgba(255, 0, 0, 0.13) !important;
+  color: black;
+  cursor: not-allowed;
+}
+
+/* ========== BARRA DE FERRAMENTAS ========== */
+
+.barra-ferramentas .btn-ans {
+  color: #595959;
+  background-color: #ddd;
+}
+
+.barra-ferramentas .btn-ans:hover {
+  background-color: #e6e6e6;
+}
+
+.barra-ferramentas .div-btn-colunas ul li a.exibindo i.fa-circle {
+  display: none;
+}
+
+.barra-ferramentas .div-btn-colunas ul li a:not(.exibindo) i.fa-check-circle {
+  display: none;
+}
+
+.resp {
+  height: 55vh !important;
+  overflow: auto;
+}
+
+/* ========== TABELA PRINCIPAL ========== */
+
+table .col-avatar .avatar,
+table .col-avatar .nome {
+  display: table-cell;
+  float: none;
+  vertical-align: middle;
+}
+
+table .col-avatar .nome {
+  padding-left: 8px;
+}
+
+div.tabela table > thead > tr > th {
+  text-transform: uppercase;
+}
+div.tabela table > tbody > tr {
+  cursor: pointer;
+}
+
+table.dataTable thead th.sorting:after,
+table.dataTable thead th.sorting_asc:after,
+table.dataTable thead th.sorting_desc:after {
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  display: block;
+  font-family: 'Font Awesome 5 Free';
+}
+
+table.dataTable thead th.sorting_asc:after {
+  content: '\f161';
+}
+
+table.dataTable thead th.sorting_desc:after {
+  content: '\f160';
+}
+
+.buttons-html5,
+.buttons-print {
+  background: none;
+  width: 100%;
+  border: none;
+  text-align: left;
+}
+.buttons-html5:hover,
+.buttons-print:hover {
+  background-color: #e9e9e9;
+}
+
+.fluig-style-guide td,
+.fluig-style-guide th {
+  font-size: 16px !important;
+}
+
+/* Personalização da tabela */
+
+.table.dataTable {
+  margin-top: 0px !important;
+}
+
+.flex-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-box .panel.panel-default {
+  width: 50vw;
+}
+
+.container-box {
+  height: 80vh;
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.fluig-style-guide .fluig-filter {
+  position: inherit !important;
+}
+
+/*
+#tblPrincipal tbody {
+  background-color: #fff;
+}
+*/
+.consultaRoteirizacao .form-group input.form-control,
+.consultaRoteirizacao .form-group textarea.form-control,
+.consultaRoteirizacao .form-group span.form-control,
+.container-modal input.form-control,
+.container-modal textarea.form-control,
+.container-modal .form-group span.form-control {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/*
+#tblHistorico thead tr {
+  background-color: #eee;
+  height: 4rem;
+  border-bottom: 2px solid #00000024;
+}
+*/
+/*
+#tblHistorico tbody tr {
+  height: 5rem;
+}
+*/
+
+/* ========== 2. CORES E ITENS PADRÃƒO DO FORMULARIO  ========== */
+
+.btnShowMore:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+}
+
+.btnShowMore.active:after {
+  content: '\2212';
+}
+
+.dataTables_scrollBody table thead tr {
+  visibility: collapse;
+}
+
+button[data-back-to-top-button] {
+  visibility: collapse;
+  height: 0 !important;
+}
+
+.btn-default.active.nao {
+  background-color: #d33 !important;
+  color: #fff !important;
+}
+
+.btn-default.active.sim {
+  background-color: green !important;
+  color: #fff !important;
+}
+
+.fluig-style-guide .form-group.has-error label.error {
+  color: #a94442;
+}
+
+.fluig-style-guide .has-success .checkbox,
+.fluig-style-guide .has-success .checkbox-inline,
+.fluig-style-guide .has-success .control-label,
+.fluig-style-guide .has-success .help-block,
+.fluig-style-guide .has-success .radio,
+.fluig-style-guide .has-success .radio-inline,
+.fluig-style-guide .has-success.checkbox label,
+.fluig-style-guide .has-success.checkbox-inline label,
+.fluig-style-guide .has-success.radio label,
+.fluig-style-guide .has-success.radio-inline label {
+  color: #449d44 !important;
+}
+
+.fluig-style-guide .has-error .checkbox,
+.fluig-style-guide .has-error .checkbox-inline,
+.fluig-style-guide .has-error .control-label,
+.fluig-style-guide .has-error .help-block,
+.fluig-style-guide .has-error .radio,
+.fluig-style-guide .has-error .radio-inline,
+.fluig-style-guide .has-error.checkbox label,
+.fluig-style-guide .has-error.checkbox-inline label,
+.fluig-style-guide .has-error.radio label,
+.fluig-style-guide .has-error.radio-inline label {
+  color: #a94442 !important;
+}
+
+.fluig-style-guide .form-group.has-error .input-group .input-group-addon {
+  border-color: #a94442 !important;
+  background-color: #a94442 !important;
+}
+
+.fluig-style-guide .form-group.has-error .input-group-addon:hover {
+  background-color: #8a3533 !important;
+  border-color: #8a3533 !important;
+}
+
+.fluig-style-guide .form-group.has-success .input-group .input-group-addon {
+  border-color: #449d44 !important;
+  background-color: #449d44 !important;
+}
+.fluig-style-guide .form-group.has-success .input-group-addon:hover {
+  background-color: #2e5f2f !important;
+  border-color: #2e5f2f !important;
+}
+
+.fluig-style-guide .form-group.has-error .bootstrap-tagsinput {
+  border-width: 1px !important;
+  border-color: #d1d3d4 !important;
+  background-image: linear-gradient(to left, #a94442, #ef9a9a), linear-gradient(to left, #a94442, #ef9a9a) !important;
+  border-bottom: inherit !important;
+}
+
+.fluig-style-guide .form-group.has-success .bootstrap-tagsinput {
+  border-width: 1px !important;
+  border-color: #d1d3d4 !important;
+  background-image: linear-gradient(to left, #449d44, #a5d6a7), linear-gradient(to left, #449d44, #a5d6a7) !important;
+  border-bottom: inherit !important;
+}
+
+.fluig-style-guide .form-group.has-success select:not([multiple]).form-control {
+  background-image: linear-gradient(to left, #449d44, #a5d6a7), linear-gradient(to left, #449d44, #a5d6a7), url(https://telemont-hom.fluig.com:9143/style-guide/images/chevron-down.png) !important;
+}
+
+.fluig-style-guide .form-group.has-error select:not([multiple]).form-control {
+  background-image: linear-gradient(to left, #ef9a9a, #a94442), linear-gradient(to left, #ef9a9a, #a94442), url(https://telemont-hom.fluig.com:9143/style-guide/images/chevron-down.png) !important;
+}
+
+/* MODIFICAÇÕES */
+
+.barra-ferramentas ul.dropdown-menu {
+  width: 15.4rem;
+}
+
+.barra-ferramentas ul.dropdown-menu li:not(.divider) {
+  display: flex;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  font-weight: bold;
+}
+
+.barra-ferramentas ul.dropdown-menu li:hover {
+  background-color: #b9b7b747;
+}
+
+.barra-ferramentas .dropdown-menu > li > a:focus,
+.barra-ferramentas .dropdown-menu > li > a:hover {
+  background-color: inherit !important;
+}
+
+.barra-ferramentas ul.dropdown-menu li a {
+  padding: 0 !important;
+}
+
+#datepicker .ui-widget-content {
+  border: inherit !important;
+  display: contents !important;
+}
+
+#datepicker .ui-datepicker-calendar tbody tr td a {
+  text-align: center !important;
+  border: inherit !important;
+  background: inherit !important;
+}
+
+#datepicker .ui-datepicker-calendar thead tr th {
+  text-align: center !important;
+}
+
+#datepicker .ui-datepicker-calendar tbody tr td a.ui-state-active {
+  background-image: linear-gradient(to bottom left, #a5d6a7, rgb(63, 104, 236)) !important;
+  color: #fff !important;
+  border-radius: 100% !important;
+}
+
+/*
+table tbody tr:nth-of-type(even) {
+  background-color: #f9f9f9;
+}
+*/
+
+.swal2-container .swal2-center .swal2-fade {
+  z-index: 1070 !important;
+}
+
+.wcm-background{
+  background-image: url('/auditoria_recebimentos_cargas/resources/images/bg.jpg') !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
+}
