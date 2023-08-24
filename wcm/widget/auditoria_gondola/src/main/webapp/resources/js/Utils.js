@@ -1,12 +1,5 @@
 class Utils {
-    /*****************************************************************************************************************************
-    *                          CLASSE SUITECASE RAPHAEL.TI CRIADA 24/11/2021 08:56 HCODE.COM                                     *
-    ******************************************************************************************************************************/
-
     static fMOMENT_JS(){
-
-        //<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
-
         moment().format('LT'); // 12:21 - Horário
         moment().format('LTS'); // 12:21 - Horário + segundos
         moment().format('L'); // 11/09/2020 - Dia/mês/ano (pt-br)
@@ -17,28 +10,21 @@ class Utils {
         moment().format('lll'); // 11 de set de 2020 às 12:21
         moment().format('LLLL'); // sexta-feira, 11 de setembro de 2020 às 12:21
         moment().format('llll'); // sex, 11 de set de 2020 às 12:21
-
         moment().format(); // 2020-09-11T12:33:14-03:00
         moment().format('DD/MM/YYYY'); // 11/09/2020
         moment().format('DD/MM/YYYY HH:mm:ss'); // 11/09/2020 12:34:03
         moment().format("[Hoje é] dddd"); // Hoje é sexta-feira
-
     };
 
     static fPRIMEIRODIAMES_ULTIMODIAMES(){
-
         let ano = '2022';
         let mes = '10';
         let dia = '01';
         const date = new Date([ano,mes,dia]);
 		const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
 		const firstDayDate = firstDay. toLocaleDateString('pt-br');
-		//console. log(firstDayDate) // "01/12/2022";
-	
 		const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 		const lastDayDate = lastDay.toLocaleDateString('pt-br');
-		//console. log(lastDayDate) // "31/12/2022";
-
     };
 
     static retorna_Data_Hora_Atual(data){
@@ -57,11 +43,11 @@ class Utils {
         var hora = data.getHours().toString().padStart(2, '0');
         var min  = data.getMinutes().toString().padStart(2, '0');
         var seg  = data.getSeconds().toString().padStart(2, '0');
+
         return dia + "/" + mes + "/" + ano + " " + hora + ":"+ min +":"+ seg;
     };
 
     static fSYSDATE_DDMMYYYY(){
-	
         var	data = new Date();
         var dia  = data.getDate().toString();
         var diaF = (dia.length == 1) ? '0'+dia : dia;
@@ -74,13 +60,12 @@ class Utils {
         var minF = (min.length == 1) ? '0'+min : min;
         var seg  = data.getSeconds().toString();
         var segF = (seg.length == 1) ? '0'+seg : seg;
-        
+
         return diaF + "/" + mesF + "/" + anoF ;
         
     };//fSYSDATE_DDMMYYYY();
 
     static fSYSDATE_DDMMYYYY_HHMMSS(){
-        
         var	data = new Date();
         var dia  = data.getDate().toString();
         var diaF = (dia.length == 1) ? '0'+dia : dia;
@@ -99,7 +84,6 @@ class Utils {
     };//fSYSDATE_DDMMYYYY();
 
     static retorna_formatadoDataHoraAtual(){
-	
         var	data = new Date();
         var dia  = data.getDate().toString();
         var diaF = (dia.length == 1) ? '0'+dia : dia;
@@ -112,7 +96,7 @@ class Utils {
         var minF = (min.length == 1) ? '0'+min : min;
         var seg  = data.getSeconds().toString();
         var segF = (seg.length == 1) ? '0'+seg : seg;
-        
+
         return diaF + "/" + mesF + "/" + anoF + " " + horaF + ":"+ minF +":"+ segF;
         
     };
@@ -132,13 +116,12 @@ class Utils {
         var minF = (min.length == 1) ? '0'+min : min;
         var seg  = duedate.getSeconds().toString();
         var segF = (seg.length == 1) ? '0'+seg : seg;
-        
+
         return diaF + "/" + mesF + "/" + anoF ;
         
     };//final retorna_formatadoDataMenosOutrosPeriodos();
     
     static retorna_formatadoDataMenosOutrosPeriodos(){
-        
         var	data = new Date();
         var dia  = data.getDate().toString();
         var diaF = (dia.length == 1) ? '0'+dia : dia;
@@ -151,7 +134,7 @@ class Utils {
         var minF = (min.length == 1) ? '0'+min : min;
         var seg  = data.getSeconds().toString();
         var segF = (seg.length == 1) ? '0'+seg : seg;
-        
+
         return diaF + "/" + mesF + "/" + anoF ;
         
     };//final retorna_formatadoDataHoraAtual();
@@ -216,7 +199,6 @@ class Utils {
         var ano = data.getFullYear().toString().substr(2,4);
         var mes = (data.getMonth()+1).toString();
         var dia = data.getDate().toString();
-        
         var novaData = '1'+ano+pad(mes)+pad(dia);
         
         return novaData;
@@ -300,7 +282,6 @@ class Utils {
         var ano = paramdata.substr(4,2);
         var mes = paramdata.substr(2,2);
         var dia = paramdata.substr(0,2);
-        
         var rms7 = '1'+ano+mes+dia;
         
         return rms7;
@@ -333,13 +314,11 @@ class Utils {
     };//final handleKeyPress;
 
     static disablePullToRefresh(){ //Disable atualizar tela Mobile:
-        /*      disablePullToRefresh();     */
         return true;
     };//final disablePullToRefresh
 
     /* Dataset */
     static fDML_FLUIG(myQuery){
-
         var dsNewDataset = DatasetBuilder.newDataset();
         var dataSource = "/jdbc/FluigDS";
         var ic = new javax.naming.InitialContext();
@@ -360,7 +339,6 @@ class Utils {
             log.error("ERRO==============> " + e.message);
     
         } finally {
-            
             if (stmt != null) {
                 stmt.close();	
             }
@@ -373,7 +351,6 @@ class Utils {
     
     /* Dataset */
     static fDML_RMS(myQuery){
-    
         var dsNewDataset = DatasetBuilder.newDataset();
         var dataSource = "/jdbc/FluigDSRMS";
         var ic = new javax.naming.InitialContext();
@@ -407,7 +384,6 @@ class Utils {
 
     /* Dataset */
     static fENVIAR_EMAIL(titulo, corpo_email, destino) {
-
         let obj = new com.fluig.foundation.mail.service.EMailServiceBean();
         let subject = titulo;
         let mensagem   = corpo_email;
@@ -504,9 +480,8 @@ class Utils {
         };//final catch
     
     };//final fGETUSER_STARTPROCESS_CLASSICO;
-    
+
     static dDISABLED_JQUERY(){
-        
         // Disable #x
         $( "#x" ).prop( "disabled", true );
         
@@ -523,7 +498,6 @@ class Utils {
     };//dDISABLED_JQUERY
 
     static get_browser_version(){
-
         var ua=navigator.userAgent,tem,M=ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || []; 
         if(/trident/i.test(M[1])){
             tem=/\brv[ :]+(\d+)/g.exec(ua) || []; 
@@ -539,11 +513,9 @@ class Utils {
           name: M[0],
           version: M[1]
         };
-
     };//final get_browser_version().
 
     static get_browser_version_new(){
-
         var ua=navigator.userAgent,tem,M=ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || []; 
         if(/trident/i.test(M[1])){
             tem=/\brv[ :]+(\d+)/g.exec(ua) || []; 
@@ -588,7 +560,6 @@ class Utils {
                 timeout: 300000
             });
         };//
-          
         return {
           name: M[0],
           version: M[1]
@@ -597,7 +568,6 @@ class Utils {
     };//final get_browser_version().
 
     static get_browser_boolean(){
-
         // Opera 8.0+;
         var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
@@ -635,40 +605,8 @@ class Utils {
 
     };
 
-    static get_navegador_os(){
-
-        /*
-            console.log(platform);
-            document.write("You are using " + platform.name +
-                        " v" + platform.version + 
-                        " on " + platform.os);
-
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/platform/1.3.5/platform.min.js"></script>
-            
-        */
-
-        /*
-            <script src="https://unpkg.com/bowser@2.7.0/es5.js"></script>
-
-            var result = bowser.getParser(window.navigator.userAgent);
-            console.log(result);
-            document.write("You are using " + result.parsedResult.browser.name +
-                        " v" + result.parsedResult.browser.version + 
-                        " on " + result.parsedResult.os.name);
-        */
-
-    };//get_navegador_os
-
     static fIMPRESSAO_DIV(){
-
-        /* <button class="btn btn-primary printFunction_07" id="printFunction_07">Imprimir</button> */
-        /* <script type="text/javascript" src="jQuery.print.js"></script> */
-        /*****************************************************************************************************************************
-        *                                         INICIO IMPRESSÃO BTN RESUMO MESA                                                       *
-        ******************************************************************************************************************************/
         $('.printFunction_13').on('click',function(){
-            //fPRINT_DIV("IDTABLENAMELISTACOMPRASFINAL");
-
             $("#IDTABLENAMELISTACOMPRASFINAL").print({
                     globalStyles: true,
                     mediaPrint: false,
@@ -693,47 +631,27 @@ class Utils {
     };//validateEmail
 
     static getDiaDaSemana(){
-
         var data = new Date();
         var dw = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
         return dw[data.getDay()];
-        //"Domingo";
-        //"Sábado";
-        
     };//final getDiaDaSemana;
 
     static cancelarDuplicidadesZanthus(FILIAL,DATA_AUDITADA){
-
         console.log('====================== AUDUITORIA DE TROCA AS CEGAS - CANCELANDO TROCAS DUPLICADAS ======================');
         if(FILIAL||DATA_AUDITADA){
             console.log('========== AUDUITORIA DE TROCA AS CEGAS - LOJA: '+FILIAL+' DATA_AUDITADA: '+DATA_AUDITADA+' =============');
-    
             var parametros = new Array();
             parametros.push(DatasetFactory.createConstraint("AUDITORIA_TROCAS_ASCEGAS","CANCELAR_DUPLICIDADES_ZANTHUS", "CANCELAR_DUPLICIDADES_ZANTHUS", ConstraintType.MUST));
             parametros.push(DatasetFactory.createConstraint("FILIAL",FILIAL, FILIAL, ConstraintType.MUST));
             parametros.push(DatasetFactory.createConstraint("DATA_AUDITADA",DATA_AUDITADA, DATA_AUDITADA, ConstraintType.MUST));
             var ds = DatasetFactory.getDataset("ds_auditoriatrocas_ascegas_consultaritens", null, parametros, null);
-            if( ds.values.length > 0 ){
-                //console.log("ds.values: ", ds.values);
-                for(var i=0; i < ds.values.length; i++){
-                    temp.push({
-                        //COD_MERCADORIA:ds_item_trocas.getValue(i,"COD_MERCADORIA"),
-                        //QTDE:ds_item_trocas.getValue(i,"QUANTIDADE")
-                        //COD_ITEM:ds_item_trocas.values[i].COD_ITEM,
-                        //COD_MERCADORIA:ds_item_trocas.values[i].COD_MERCADORIA,                    
-                    });
-                };
-            };//final ds.values.length.
-    
         };//final if
     
     };//final cancelarDuplicidadesZanthus();
 
     static consultarQueryViaNavegador(){
-
         try {
             var query = "select ux.lojaorigem AS FILIAL,ux.solicitante AS solicitante,ux.escolhadeptosetororigem AS COD_SETOR,ux.nomeorigem AS SETOR, y.CODITEM AS coditemrecebido, TRIM(y.DESCITEM) AS DESCRICAO, sum(y.QTDPEDIDO) AS TOTAL,y.PRCITEM AS MEDIA_PRECO,y.EANITEM AS eanitemrecebido from ML001035 ux inner join ml001036 y on ux.DOCUMENTID = y.documentid and ux.version = y.version where 1=1 and ux.lojaorigem = 132 group by ux.lojaorigem,ux.solicitante,ux.escolhadeptosetororigem,ux.nomeorigem,y.CODITEM,y.DESCITEM,y.EANITEM,y.PRCITEM order by ux.lojaorigem, ux.solicitante, ux.nomeorigem, y.DESCITEM";
-                    
             var dataset = DatasetFactory.getDataset("ds_sql_fluig", [query], null, null);
             } catch (error) {
                 console.error('ClassUtils. Erro fINFOBANCOCONECTADO_RMS() ==>ERRO:'+error);
@@ -743,18 +661,14 @@ class Utils {
     };//final consultarQueryViaNavegador();
 
     static fDATASET_VIA_NAVEGADOR_TESTES_DS(){
-
         var c1  = DatasetFactory.createConstraint("PERIODO", '202211', '202211', ConstraintType.MUST);
         var c2  = DatasetFactory.createConstraint("LOJACOMDIG", '132', '132', ConstraintType.MUST);
         var constraint = new Array(c1,c2);
         let ds = DatasetFactory.getDataset("ds_comissao_venda_suvinil_atualiza", null, constraint, null);
         console.log('ds:',ds);
-
     };
 
     static retornaSO(){
-        //alert(retornaSO());
-
         var userAgent = navigator.userAgent || navigator.vendor || window.opera;
         if (/windows phone/i.test(userAgent)) {
             return "Windows Phone";
@@ -765,11 +679,9 @@ class Utils {
         } else {
             return "unknown";
         };
-        
     };//retornaSO
 
     static fDATEPICKER(){
-        /* Brazilian initialisation for the jQuery UI date picker plugin. */
         jQuery(function($){
             $.datepicker.regional['pt-BR'] = {
                 closeText: 'Fechar',
@@ -793,7 +705,6 @@ class Utils {
     };//fDATEPICKER
 
     static fREMOVE_CARACTERE_STR(){
-
         const str = 'hello´`/\@*- 123 !@#$%^WORLD?.';
         const noSpecialCharacters = str.replace(/[^a-zA-Z0-9 ]/g, '');
         console.log(noSpecialCharacters);
@@ -801,17 +712,13 @@ class Utils {
 
     static fCONTADOR_TEMPOEMTEMPO(){
         //count = 0; variavel global;
-
         let interval = setInterval(()=>{
-
             // increasing the count by 1
             this.count += 1;
-        
             // when count equals to 5, stop the function
             if(this.count === 5){
                 clearInterval(interval);
             };
-        
             // display the current time
             let dateTime= new Date();
             let time = dateTime.toLocaleTimeString();
@@ -819,21 +726,13 @@ class Utils {
             console.log( (this.count).toString(),'/ 5 - Execução de atualização de NF geradas: ', time);
         
         }, 60000);
-
-        //1Horas  == 3600000 ms;
-        //30Minutos == 1800000 ms;
-
     };//fCONTADOR_TEMPOEMTEMPO
 
     static fORDENAR_ARRAY(vArray){
-
-        //title="Estoque = 0, não pode ser usado!"
-
         vArray.sort((a,b)=>{
             //return a.ESTOQUE > b.ESTOQUE ? -1 : a.ESTOQUE < b.ESTOQUE ? 1 : 0;
             return a.PRECO_CUSTO_INSU_S < b.PRECO_CUSTO_INSU_S;
         });
-
         //Ordenar Array() pela coluna Estoque;
         dataset.values.sort((a,b)=>{
             //return a.ESTOQUE > b.ESTOQUE ? -1 : a.ESTOQUE < b.ESTOQUE ? 1 : 0;
@@ -862,7 +761,6 @@ class Utils {
       
     static swalError(msg, err){
         return Swal.fire({
-        
             title: 'Algo deu errado :(',
             html: msg,
             icon: 'error',
@@ -877,7 +775,6 @@ class Utils {
       
     static swalHome(title, msg){
         return Swal.fire({
-        
             title: title,
             html: msg,
             icon: 'error',
@@ -915,43 +812,21 @@ class Utils {
     };//
 
     static carregamentoFluig(){
-
         var myLoading2 = FLUIGC.loading(window);
         var myLoading2 = FLUIGC.loading(window,{textMessage:'Insira seu Texto aqui!...'});
 		myLoading2.show();
-		//setTimeout(function() {
         setTimeout(()=> {
-	/*****************************************************************************************************************************
-	*		                          				INICIO	LOADER FLUIG                                              			 *
-	******************************************************************************************************************************/
-
-    
-
-    /*****************************************************************************************************************************
-	*		                          				FINAL LOADER FLUIG                                              			 *
-	******************************************************************************************************************************/
-        myLoading2.hide();
+            myLoading2.hide();
         }, 200);
-
-
     }; //final carregamentoFluig.
 
     static retorna_Ambiente_UsuarioLogado(){
-
-        /**************************************************************************************************************************
-        *                          Carrando filial de acordo com o Login do Usuario                                               *
-        ***************************************************************************************************************************/
         let retornoAmbiente = DatasetFactory.getDataset('DS_SQL_FLUIG_QUALAMBIENTEESTOU', null, null, null);
         let login = fetch(retornoAmbiente.values[0].URL_REDUZ+'/api/public/2.0/users/getCurrent').
                     then( response => response.json()).then( data => {
                         var usuariologado = data.content.login;
-                        //console.log('Olá usuário: ' + usuariologado + ', ' + retornoAmbiente.values[0].DESCRICAO);
                         return usuariologado+','+retornoAmbiente.values[0].DESCRICAO;
                     });
-        /**************************************************************************************************************************
-        *                               FIM DO Carrando filial de acordo com o Login do Usuario                                  *
-        ***************************************************************************************************************************/
-
     };// retorna_Ambiente_UsuarioLogado();
 
     static fRETURN_AMBIENTE_USUARIOLOGADO(){
@@ -987,7 +862,6 @@ class Utils {
     };//final vRETURN_AMBIENTE_USUARIOLOGADO;
 
     static fMOSTRA_ESCONDE_ACCORDION(){
-
         $(async function(){
             $('.btn-success').on('click', function(e) {
                 $('#accordion .collapse').removeAttr("data-parent").collapse('show');
@@ -996,7 +870,5 @@ class Utils {
                 $('#accordion .collapse').attr("data-parent","#accordion").collapse('hide');
             });
         });
-
     };
-
 }; //final da class utils

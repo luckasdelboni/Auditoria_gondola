@@ -4,9 +4,6 @@ function createDataset(fields, constraints, sortFields){
 	dataset.addColumn("ERRO");
 	dataset.addColumn("MSG");
 	dataset.addColumn("DETALHES");
-    //dataset.addRow(['0','0','MENSAGEM DE RETORNO']);
-    //return dataset;
-
     var decimal;
 
     if (constraints != null){
@@ -131,7 +128,6 @@ function createDataset(fields, constraints, sortFields){
             return DatasetFactory.getDataset("ds_sql_ti_guests_rms", [sql], null, null);
 
         }else if(constraints[0].fieldName == "GET"  && constraints[0].initialValue == "DET_RECEBIMENTOS"){
-
             var FILIAL_SEMDIG ;
             var ATIVIDADE ;
             var DATA_FORMATRMS ;
@@ -267,7 +263,6 @@ function createDataset(fields, constraints, sortFields){
                 let DATA_FORMATRMS ;
                 let VOLUME_AUDITADO ;
                 let USUARIO_LOGADO ;
-        
                 let CODPROD ;
                 let EAN ;
                 let DESCRICAO ;
@@ -361,7 +356,6 @@ function createDataset(fields, constraints, sortFields){
                     if (constraints[i].fieldName == "VALIDADE_FORMATRMS"){
                         VALIDADE_FORMATRMS = constraints[i].initialValue;
                     };
-
                 };//final for;
 
                 var sql="SELECT "+
@@ -373,7 +367,6 @@ function createDataset(fields, constraints, sortFields){
                         "AND A.codprod = '"+CODPROD+"' "+
                         "AND A.DATA_RECEBIMENTO = '"+DATA_FORMATRMS+"' "+
                         "AND A.FLGATIVO = 'A' ";
-
                 var ds = DatasetFactory.getDataset("ds_sql_fluig", [sql], null, null);
                 if(ds.rowsCount > 0){
 
@@ -410,17 +403,11 @@ function createDataset(fields, constraints, sortFields){
                     };
 
                 };
-
             }catch(e){
-
                 log.error('Encontrei um erro em ds_audit_recebimento_cargas_widget catch(e) fieldName=="GET" && initialValue=="CRITICA_RECEBIMENTOS" ERRO==>'+e);
-
             };
-
             return dataset;
-
         };
-
     };//final if constraints;
 
 
@@ -429,9 +416,7 @@ function createDataset(fields, constraints, sortFields){
 function substituirDecimal(valor_string,decimal){
 	var ambiente = DatasetFactory.getDataset("ds_get_servidor", null, null, null);
 	let nome_ambiente = ambiente.getValue(0, 'ambiente') || '';
-
 	let row_decimal = nome_ambiente == 'producao' ? ',' : decimal;
-	//decimal = ',';
 	return valor_string.replace( ',', row_decimal).replace('.', row_decimal);
 };//final substituirDecimal;
 
@@ -461,13 +446,11 @@ function pad(num){
 };// final pad;
 
 function fDML_FLUIG(myQuery){
-
     /* 
     execute -> Executa qualquer tipo de instrução SQL, seja um SELECT, UPDATE, INSERT, DELETE;
     executeQuery -> Executa uma instrução sql SELECT, no entanto diferente da execute onde era necessário executar o comando statement.getResultSet() ou preparedStatement.getResultSet() a mesma já retorna o ResultSet;
     executeUpdate -> Executa operações como INSERT, UPDATE, DELETE, no entanto nesta operação temos como retorno o numero de linhas afetadas, não sendo necessário executar o comando statement.getUpdateCount();
     */
-
     /*
     O método execute() serve para qualquer instrução SQL. A diferença é o tipo de retorno que ele te dá, que é um boolean - pra indicar se o comando foi executado no banco ou não. O executeQuery() te retorna um objeto ResultSet que é o conjunto de linhas lidas pelo select, e o executeUpdate() te retorna um int que é a quantidade de linhas atingidas pela instrução delete, insert ou update.
     */
@@ -479,7 +462,6 @@ function fDML_FLUIG(myQuery){
     log.info("[ds_audit_recebimento_cargas_widget] [fDML_FLUIG] QUERY: "+myQuery);
 
 	try{
-
         var dataSource = "/jdbc/FluigDS";
         var ic = new javax.naming.InitialContext();
         var ds = ic.lookup(dataSource);
@@ -489,7 +471,6 @@ function fDML_FLUIG(myQuery){
         stmt.setQueryTimeout(1800);
         var rs = stmt.execute(myQuery);
         dsNewDataset.addRow(new Array("OKPASS",rs));
-
     }catch(e){
         
         dsNewDataset.addRow(new Array("ERRO",e.message));
@@ -546,7 +527,6 @@ function fDML_RMS(myQuery){
     return dsNewDataset;
 };//final fDML_RMS();
 function retorna_formatadoDataHoraAtual(){
-	
     var	data = new Date();
     var dia  = data.getDate().toString();
     var diaF = (dia.length == 1) ? '0'+dia : dia;
@@ -563,6 +543,7 @@ function retorna_formatadoDataHoraAtual(){
     return diaF + "/" + mesF + "/" + anoF + " " + horaF + ":"+ minF +":"+ segF;
     
 };//final retorna_formatadoDataHoraAtual();
+
 //Formata para o RMS 1220707, originado de input;
 function inputString_para_RMS(paramdata){
     ano = paramdata.substr(6,4);
@@ -572,7 +553,6 @@ function inputString_para_RMS(paramdata){
     var ano = data.getFullYear().toString().substr(2,4);
     var mes = (data.getMonth()+1).toString();
     var dia = data.getDate().toString();
-    
     var novaData = '1'+ano+pad(mes)+pad(dia);
     
     return novaData;

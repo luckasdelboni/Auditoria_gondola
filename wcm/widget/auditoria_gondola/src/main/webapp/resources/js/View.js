@@ -1,7 +1,10 @@
+/**
+ * 
+ */
 class View{
+
   constructor(obj){
     this.alreadyStarted = false;
-
   };
 
   async fCHAMAMODAL_VIEW(array){
@@ -12,7 +15,6 @@ class View{
 
       let infoDET ;
       var modalDetalhes ;
-
       var modal_ATIVIDADE = array[0].ATIVIDADE;
       var modal_FILIAL_SEMDIG = array[0].FILIAL_SEMDIG;
       var modal_DATA_FORMATRMS = array[0].DATA_FORMATRMS;
@@ -20,20 +22,16 @@ class View{
       var modal_PLACA = array[0].PLACA;
       var modal_OPERADOR = array[0].OPERADOR;
       var modal_NOMEOPERADOR = array[0].NOME_OPERADOR;
-
       console.log('Class View: ATIVIDADE: '+modal_ATIVIDADE+' FILIAL_SEMDIG:'+modal_FILIAL_SEMDIG+' '+modal_DATA_FORMATRMS);
   
       var tableLoading = FLUIGC.loading('.tbl-item');
       tableLoading.show();
-  
+   
       try {
-        /*async getRowsRecebimentosCargas(PERIODO_FORMATRMS,STATUS_RECEB,modal_FILIAL_SEMDIG) */
         infoDET = await services.getRowsRecebimentosDetalhesCargas(modal_ATIVIDADE,modal_FILIAL_SEMDIG,modal_DATA_FORMATRMS);
         if(infoDET.length){
-  
           console.log('Retorno a ser listado no painel: ', infoDET);
           tableLoading.hide();
-
           let table_content = ``;
           for(var r=0; r < infoDET.length; r++){
             
@@ -49,10 +47,8 @@ class View{
             let EMB_REC = infoDET[r].EMB_REC;
             let QTD_REC1 = infoDET[r].QTD_REC1;
             let QTD_REC2 = infoDET[r].QTD_REC2;
-            
             let QTD_REC3 = infoDET[r].QTD_REC3; //val se existe cadastro central;
             let QTD_CENTRAL3 = `<input name="VALUE_CENTRAL_${r}" id="VALUE_CENTRAL_${r}" class="form-control auditcentral VALUE_CENTRAL_${r}" type="text" value="${QTD_REC3}">`;
-            
             let VALIDADE = infoDET[r].VALIDADE;
             let SIT = infoDET[r].SIT;
             let EXISTE_PAR = infoDET[r].EXISTE_PAR;
@@ -61,7 +57,6 @@ class View{
 
             /*====================== GERAR TABELA COM DIFERENÇAS ========================*/
             if( QTD_PED == QTD_FAT && QTD_PED == QTD_REC1 && QTD_PED == QTD_REC3 ){
-
               table_content += `<tr id="IDTR_AUDITADOOK_${r}" name="IDTR_AUDITADOOK_${r}" class="IDTR_AUDITADOOK tr-auditadook IDTR_${r}">
                                   <td id="IDTD_CODPROD_${r}">${CODPROD}</td>
                                   <td id="IDTD_EAN_${r}">${EAN}</td>
@@ -80,9 +75,7 @@ class View{
                                   <td id="IDTD_VALIDADE_FORMATRMS_${r}" style="display:none;">${VALIDADE_FORMATRMS}</td>
                                   <td id="IDTD_DATA_RECEBIMENTO_${r}" style="display:none;">${DATA_RECEBIMENTO}</td>
                                 </tr>`;
-
             }else if( QTD_FAT != QTD_REC1 ){
-
               table_content += `<tr id="IDTR_DIVERGENTE_${r}" name="IDTR_DIVERGENTE_${r}" class="IDTR_DIVERGENTE IDTR_${r}">
                                   <td id="IDTD_CODPROD_${r}">${CODPROD}</td>
                                   <td id="IDTD_EAN_${r}">${EAN}</td>
@@ -103,7 +96,6 @@ class View{
                                 </tr>`;
 
             }else if( (QTD_FAT == QTD_REC1) && (QTD_FAT == QTD_REC2) ){
-
               table_content += `<tr id="IDTR_OK_${r}" name="IDTR_OK_${r}" class="IDTR_OK IDTR_${r}">
                                 <td id="IDTD_CODPROD_${r}">${CODPROD}</td>
                                 <td id="IDTD_EAN_${r}">${EAN}</td>
@@ -122,9 +114,7 @@ class View{
                                 <td id="IDTD_VALIDADE_FORMATRMS_${r}" style="display:none;">${VALIDADE_FORMATRMS}</td>
                                 <td id="IDTD_DATA_RECEBIMENTO_${r}" style="display:none;">${DATA_RECEBIMENTO}</td>
                               </tr>`;
-
             }else{
-
               table_content += `<tr id="IDTR_${r}" name="IDTR_${r}" class="IDTR_${r}">
                                 <td id="IDTD_CODPROD_${r}">${CODPROD}</td>
                                 <td id="IDTD_EAN_${r}">${EAN}</td>
@@ -144,7 +134,6 @@ class View{
                                 <td id="IDTD_DATA_RECEBIMENTO_${r}" style="display:none;">${DATA_RECEBIMENTO}</td>
                               </tr>`;
             };//final if/else;
-
           };//final for;
           
           modalDetalhes = FLUIGC.modal({
@@ -213,34 +202,24 @@ class View{
                 'label': 'Close',
                 'autoClose': true
             }]
-  
           });
-
           //REMOVEDOR DE LETRAS DE UM INPUT:
           $('.auditcentral').on('input', function(){
             let regex = new RegExp('[^ 0-9\b]', 'g');
-            //let val = $(this).val() // get the current value of the input field.
             $(this).val($(this).val().replace(regex, ''));
           });
 
           /*====================== BOTÃO INSERT VALUE INPUT AUDITORIA CENTRAL =====================*/
           $("input[id^='VALUE_CENTRAL_']").change(async function(){
-            // Check input( $( this ).val() ) for validity here
             let vARR = [];
             let volumeDigitado = $(this).val();
             let index = $(this).index();
-            let idx = ($(this).attr("class").split("_")[2]).toString();
-
-            //console.log( '1. volumeDigitado: ',volumeDigitado, ' index:',index, ' idx:',idx );
-            
+            let idx = ($(this).attr("class").split("_")[2]).toString();            
             if(volumeDigitado == null || volumeDigitado == '' || volumeDigitado == ' ' ){
               console.log('Campo Null ou com Espaços, Zerando campo.')
               volumeDigitado = 0;
               $(this).val(0);
             };
-
-            //console.log( '2. volumeDigitado: ',volumeDigitado, ' index:',index, ' idx:',idx );
-
             vARR.push({
               VOLUME_AUDITADO: volumeDigitado,
               INDEX: index,
@@ -270,11 +249,10 @@ class View{
               VALIDADE_FORMATRMS: $("#IDTD_VALIDADE_FORMATRMS_"+idx).text(),
               DATA_RECEBIMENTO: $("#IDTD_DATA_RECEBIMENTO_"+idx).text()
             });
-            
             console.log('JSON_CLICK: ',vARR);
             let dsServices = await services.putRegistroAuditoria(vARR);
-
             console.log('dsServices: ',dsServices);
+
             if(dsServices.length > 0){
               let ERRO = dsServices[0].ERRO;
               let MSG = dsServices[0].MSG;
@@ -296,33 +274,18 @@ class View{
             };
 
           });
-          /*====================== BOTÃO INSERT VALUE INPUT AUDITORIA CENTRAL =====================*/
 
-
-          /*====================== BOTÃO START PROCESS =====================*/
-          /*
-          $( "button[id^='ID_BTN_STARTPROCESS']" ).change(async function(){
-            let retorno = await controller.fINICIAR_PROCESS_FLUIG(this);
-
-          });
-          */
-          /*====================== BOTÃO START PROCESS =====================*/
-  
         }else{
           tableLoading.hide();
-          
           FLUIGC.toast({
             message: 'Nenhum retorno de detalhes para periodo selecionado foi encontrado.',
             type: 'info',
           });
-  
         };
-  
       }catch(e){
         tableLoading.hide();
         return Utils.unexpectedError('Erro ao preencher a tabela detalhes ', e.message);
       };
-
     }else{
       console.warn('fCHAMAMODAL_VIEW() está com array zerado.');
     };
@@ -338,19 +301,8 @@ class View{
         tag: new Date().getTime(),
         icon: 'images/user_picture.png'
       });
-      
       notification.show();
     };
-
-    /*
-    var notification = FLUIGC.notification({
-        title: "Desktop Notification",
-        body: "Now is " + FLUIGC.calendar.formatDate(new Date()),
-        tag: new Date().getTime(),
-        icon: 'images/user_picture.png'
-    });
-    notification.show();
-    */
   };
 
 };

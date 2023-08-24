@@ -5,13 +5,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.18/b-1.5.6/b-html5-1.5.6/b-print-1.5.6/datatables.min.css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-
-<!-- =========================================================================================================== -->
-<!-- SWEET ALERT 2 																								 -->
-<!-- =========================================================================================================== -->
 <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-
 <script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
 
 <div id="${reposi}_${instanceId}" class="${reposi} super-widget wcm-widget-class" data-params="${reposi}.instance({reposi:'${reposi}', versao:'${versao}', widgetId: ${instanceId}})">

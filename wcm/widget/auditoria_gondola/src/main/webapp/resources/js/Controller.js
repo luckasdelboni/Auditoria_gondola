@@ -168,67 +168,62 @@ class Controller{
     const objInit = {
       // string de descrição da tabela (singular/plural)
       langDesc: {
-        s: 'Distribuição e Logistica',
-        p: 'Distribuição e Logistica',
+        s: 'Auditoria de Gôndola',
+        p: 'Auditoria de Gôndola',
       },
       // ordenação inicial da tabela
-      objOrder: [[13, 'desc']], // Atividade column
+      objOrder: [[6, 'desc']], // Atividade column
 
       // dicionário dos dados das colunas
       objColumns: [
-
         {
-          title: 'Status',
-          data: 'STATUS',
+          title: 'FILIAL',
+          data: 'MVG_FILIAL',
           className: 'text-left text-nowrap',
           width: '1%',
           render: function (data, type, row, meta) {
             if (type != 'display') return data;
             if (!data) return '';
 
-            return `<b class="CLASS_STATUS_${meta.row}"> ${data} </b>`;
+            return `<b class="CLASS_MVG_FILIAL_${meta.row}"> ${data} </b>`;
           },
         },
-
         {
-          title: 'Atividade',
-          data: 'RCP_COD_ATIV',
+          title: 'DATA ALTERAÇÃO',
+          data: 'MVG_DAT_ALTER',
           className: 'text-left text-nowrap',
           width: '1%',
           render: function (data, type, row, meta) {
             if (type != 'display') return data;
             if (!data) return '';
 
-            return `<b class="CLASS_ATIVIDADE_${meta.row}"> ${data} </b>`;
+            return `<b class="CLASS_MVG_DAT_ALTER_${meta.row}"> ${data} </b>`;
           },
         },
-
         {
-          title: 'Data',
-          data: 'DATA',
+          title: 'COD. ITEM',
+          data: 'MVG_COD_ITEM',
           className: 'text-left text-nowrap',
           width: '1%',
           render: function (data, type, row, meta) {
             if (type != 'display') return data;
             if (!data) return '';
 
-            return `<b class="CLASS_DATA_${meta.row}"> ${data} </b>`;
+            return `<b class="CLASS_MVG_COD_ITEM_${meta.row}"> ${data} </b>`;
           },
         },
-
         {
-          title: 'Hora',
-          data: 'HORA',
+          title: 'CÓD. BARRAS',
+          data: 'MVG_COD_EAN13',
           className: 'text-left text-nowrap',
           width: '1%',
           render: function (data, type, row, meta) {
             if (type != 'display') return data;
             if (!data) return '';
 
-            return `<b class="CLASS_HORA_${meta.row}"> ${data} </b>`;
+            return `<b class="CLASS_MVG_COD_EAN13_${meta.row}"> ${data} </b>`;
           },
         },
-
         {
           title: 'Data Alocada',
           data: 'DATA_ALOC',
@@ -241,36 +236,33 @@ class Controller{
             return `<b class="CLASS_DATAALOCADA_${meta.row}"> ${data} </b>`;
           },
         },
-
         {
-          title: 'Hora Alocada',
-          data: 'HORA_ALOC',
+          title: 'SECAO',
+          data: 'MVG_SECAO',
           className: 'text-left text-nowrap',
           width: '1%',
           render: function (data, type, row, meta) {
             if (type != 'display') return data;
             if (!data) return '';
 
-            return `<b class="CLASS_HORAALOCADA_${meta.row}"> ${data} </b>`;
+            return `<b class="CLASS_MVG_SECAO_${meta.row}"> ${data} </b>`;
           },
         },
-
         {
-          title: 'Doca',
-          data: 'DOCA',
+          title: 'LOTE',
+          data: 'MVG_LOTE',
           className: 'text-left text-nowrap',
           width: '1%',
           render: function (data, type, row, meta) {
             if (type != 'display') return data;
             if (!data) return '';
 
-            return `<b class="CLASS_DOCA_${meta.row}"> ${data} </b>`;
+            return `<b class="MVG_LOTE_${meta.row}"> ${data} </b>`;
           },
         },
-
         {
-          title: 'Placa',
-          data: 'PLACA',
+          title: 'PREÇO ATUAL',
+          data: 'MVG_PRECO_ATUAL',
           className: 'text-left text-nowrap',
           width: '1%',
           render: function (data, type, row, meta) {
@@ -280,10 +272,9 @@ class Controller{
             return `<b class="CLASS_PLACA_${meta.row}"> ${data} </b>`;
           },
         },
-
         {
-          title: 'Fornecedor',
-          data: 'FORNECEDOR',
+          title: 'PREÇO NOVO',
+          data: 'MVG_PRECO_NOVO',
           className: 'text-left text-nowrap',
           width: '1%',
           visible: true,
@@ -291,13 +282,12 @@ class Controller{
             if (type != 'display') return data;
             if (!data) return '';
 
-            return `<b class="CLASS_FORNECEDOR_${meta.row}"> ${data} </b>`;
+            return `<b class="CLASS_MVG_PRECO_NOVO_${meta.row}"> ${data} </b>`;
           },
         },
-
         {
-          title: 'Itens',
-          data: 'ITENS',
+          title: 'DESCRIÇÃO ITEM',
+          data: 'GIT_DESC_REDUZ',
           className: 'text-left text-nowrap',
           width: '1%',
           visible: true,
@@ -307,120 +297,7 @@ class Controller{
 
             return `<b class="CLASS_ITENS_${meta.row}"> ${data} </b>`;
           },
-        },
-
-        {
-          title: 'Volumes',
-          data: 'VOLUMES',
-          className: 'text-left text-nowrap',
-          width: '1%',
-          visible: true,
-          render: function (data, type, row, meta) {
-            if (type != 'display') return data;
-            if (!data) return '';
-
-            return `<b class="CLASS_VOLUMES_${meta.row}"> ${data} </b>`;
-          },
-        },
-
-        {
-          title: 'Operador',
-          data: 'OPERADOR',
-          className: 'text-left text-nowrap',
-          width: '1%',
-          visible: true,
-          render: function (data, type, row, meta) {
-            if (type != 'display') return data;
-            if (!data) return '';
-
-            return `<b class="CLASS_OPERADOR_${meta.row}"> ${data} </b>`;
-          },
-        },
-
-        {
-          title: 'Nome Operador',
-          data: 'NOME_OPERADOR',
-          className: 'text-left text-nowrap',
-          width: '2%',
-          visible: true,
-          render: function (data, type, row, meta) {
-            if (type != 'display') return data;
-            if (!data) return '';
-
-            return `<b class="CLASS_NOME_OPERADOR_${meta.row}"> ${data} </b>`;
-          },
-        },
-
-        {
-          title: 'P.A.R',
-          data: 'EXISTE_PAR',
-          className: 'text-left text-nowrap',
-          width: '2%',
-          visible: true,
-          render: function (data, type, row, meta) {
-            if (type != 'display') return data;
-            if (!data) return '';
-
-            return `<b class="CLASS_EXISTE_PAR_${meta.row}"> ${data} </b>`;
-          },
-        },
-
-        {
-          title: 'PAR PREENCHIDO',
-          data: 'PAR_PREENCHIDO',
-          className: 'text-left text-nowrap',
-          width: '2%',
-          visible: true,
-          render: function (data, type, row, meta) {
-            if (type != 'display') return data;
-            if (!data) return '';
-
-            return `<b class="CLASS_PAR_PREENCHIDO_${meta.row}"> ${data} </b>`;
-          },
-        },
-        /*
-        {
-          title: 'OPÇÕES',
-          data: 'OPCOES',
-          className: 'text-left text-nowrap',
-          width: '1%',
-          visible: true,
-          render: function (data, type, row, meta) {
-            if (type != 'display') return data;
-            if (!data) return '';
-
-            return `<b><button type="button" id="ID_BTN_STARTPROCESS" class="btn btn-primary CLASS_OPCOES_PROCESS_${meta.row}">Iniciar Processo</button></b>`;
-          },
-        },
-        */
-        {
-          title: 'Filial',
-          data: 'FILIAL_SEMDIG',
-          className: 'text-left text-nowrap',
-          width: '1%',
-          visible: true,
-          render: function (data, type, row, meta) {
-            if (type != 'display') return data;
-            if (!data) return '';
-
-            return `<b class="CLASS_FILIAL_SEMDIG_${meta.row}"> ${data} </b>`;
-          },
-        },
-
-        {
-          title: 'Date RMS',
-          data: 'DATA_FORMATRMS',
-          className: 'text-left text-nowrap',
-          width: '1%',
-          visible: true,
-          render: function (data, type, row, meta) {
-            if (type != 'display') return data;
-            if (!data) return '';
-
-            return `<b class="CLASS_DATA_FORMATRMS_${meta.row}"> ${data} </b>`;
-          },
-        },
-
+        }
       ],
 
       // essa função será passada como callback na chamada de criação do DataTable
@@ -435,7 +312,6 @@ class Controller{
       autoWidth: true,
       order: objInit.objOrder,
 
-      
       columns: objInit.objColumns,
       createdRow: objInit.functionRow,
     });
