@@ -46,7 +46,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-2">
+                    <#--  <div class="form-group col-md-2">
                         <label>FILTRAR ATIVIDADE</label>
                         <div class="btn-group btn-group-justified" role="group" aria-label="...">
                             <div class="btn-group div-btn-exibicaostatus" role="group">
@@ -63,7 +63,7 @@
                             </div>
                             <input type="hidden" class="form-control" id="FILTRAR_ATIVIDADE_DADOSTABLE" name="FILTRAR_ATIVIDADE_DADOSTABLE" readonly>
                         </div>
-                    </div>
+                    </div>  -->
 
                     <div class="form-group col-md-2">
                         <label>EXIBIÇÃO</label>
@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="FILTRO">FILTRO</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="FILTRO" placeholder="Pesquisar..." />

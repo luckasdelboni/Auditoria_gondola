@@ -1,4 +1,5 @@
 class Controller{
+
   constructor(obj){
     console.log('Class Controller Entrei.');
     this.fLOADING();
@@ -88,17 +89,7 @@ class Controller{
         $('.btn-exibicaofilial').html(`${txtExibF} <span class="caret"></span>`);
 
         await this.loadTable(this.DATA_FORMATRMS,this.STATUS_ATIVIDADE,this.FILIAL_SEMDIG);
-
       });
-
-      /*
-      FLUIGC.calendar('#DATAPERIODO',{
-        minViewMode: 1,
-        maxViewMode: 2,
-        format: "DD/MM/YYYY",
-        defaultDate: moment().subtract(1,'months').format('DD/MM/YYYY')
-      });
-      */
 
       FLUIGC.calendar('#DATAPERIODO',{
         pickDate: true,
@@ -129,9 +120,7 @@ class Controller{
     };//final não estou editando();
 
     this.loading.hide();
-
     await this.loadTable(this.DATA_FORMATRMS,this.STATUS_ATIVIDADE,this.FILIAL_SEMDIG);
-
   };
 
   async loadTable(DATA_FORMATRMS,STATUS_ATIVIDADE,FILIAL_SEMDIG){
@@ -172,10 +161,23 @@ class Controller{
         p: 'Auditoria de Gôndola',
       },
       // ordenação inicial da tabela
-      objOrder: [[6, 'desc']], // Atividade column
+      objOrder: [[7, 'desc']], // Atividade column
 
       // dicionário dos dados das colunas
       objColumns: [
+        {
+          title: 'Nome Operador',
+          data: 'NOME_OPERADOR',
+          className: 'text-left text-nowrap',
+          width: '2%',
+          visible: true,
+          render: function (data, type, row, meta) {
+            if (type != 'display') return data;
+            if (!data) return '';
+
+            return `<b class="CLASS_NOME_OPERADOR_${meta.row}"> ${data} </b>`;
+          },
+        },
         {
           title: 'FILIAL',
           data: 'MVG_FILIAL',
@@ -420,42 +422,32 @@ class Controller{
     let modal ;
 
     $('#tblPrincipal').on('click', 'tr', async function(event){
-
       tableData = $(event).closest("tr").find("td:not(:last-child)").map(function(){
         return $(this).text().trim();
       }).get();
 
       /*============================================*/
       linhaNew = $(this).closest("tr");
-      //var textoNew = $('#tblPrincipal').DataTable().row(linhaNew).data().Nomes;
       textoNew = $('#tblPrincipal').DataTable().row(linhaNew).data();
       console.log('textoNew: ',textoNew);
       /*============================================*/
 
-      //console.log('Linha $(this).text(): ',$(this).text());
       console.log('Idx Clicado: ',$(this).index());
-
-      //let row = $(this).text();
       arrayClicado.length = 0;
       if(textoNew){
-
-        //let rowTmp = row.split('  ');
-        //console.log('rowTmp: ',rowTmp);
         arrayClicado.push({
-          ATIVIDADE: textoNew.RCP_COD_ATIV.trim(),
-          DATA: textoNew.DATA,
-          HORA: textoNew.HORA,
-          DATA_ALOC: textoNew.DATA_ALOC,
-          HORA_ALOC: textoNew.HORA_ALOC,
-          DOCA: textoNew.DOCA.trim(),
-          PLACA: textoNew.PLACA.trim(),
-          FORNECEDOR: textoNew.FORNECEDOR.trim(),
-          ITENS: textoNew.ITENS.trim(),
-          VOLUMES: textoNew.VOLUMES.trim(),
           OPERADOR: textoNew.OPERADOR.trim(),
-          FILIAL_SEMDIG: textoNew.FILIAL_SEMDIG.trim(),
-          NOME_OPERADOR: textoNew.NOME_OPERADOR.trim(),
-          DATA_FORMATRMS: textoNew.DATA_FORMATRMS.trim()
+          FILIAL: textoNew.MVG_FILIAL.trim(),
+          DATA_ALTERACAO: textoNew.MVG_DAT_ALTER,
+          COD_ITEM: textoNew.MVG_COD_ITEM,
+          HORA_ALOC: textoNew.HORA_ALOC,
+          COD_BARRA: textoNew.MVG_COD_EAN13.trim(),
+          DATA_ALOCADA: textoNew.PLACA.trim(),
+          SECAO: textoNew.MVG_SECAO.trim(),
+          LOTE: textoNew.MVG_LOTE.trim(),
+          PRECO_ATUAL: textoNew.MVG_PRECO_ATUAL.trim(),
+          PRECO_NOVO: textoNew.MVG_PRECO_NOVO.trim(),
+          DESCRICAO_ITEM: textoNew.GIT_DESC_REDUZ.trim(),
         });
 
       };
@@ -466,7 +458,6 @@ class Controller{
   };
 
   async dateto_rms7_2(paramdata){
-
     let anoP = paramdata.substr(6,4);
     let mesP = paramdata.substr(3,2);
     let diaP = paramdata.substr(0,2);
@@ -511,9 +502,6 @@ class Controller{
         let dtPARPREENCHIDO = (dtrow.PAR_PREENCHIDO).toString().trim();
         let dtEXISTE_PAR = (dtrow.EXISTE_PAR).toString().trim();
         let dtITENS = (dtrow.ITENS).toString().trim();
-        
-        //console.log(d);
-        //console.log('Procurando no datatable o registro: ',dtATIVIDADE,' PAR:',dtPARPREENCHIDO);
 
         if(dtEXISTE_PAR > 0 && dtPARPREENCHIDO == 0){
           console.log('Encontrei no registro: ',dtATIVIDADE,' PAR:',dtPARPREENCHIDO,' adicionando class cor');
@@ -538,15 +526,12 @@ class Controller{
         };
   
       });
-
     }catch(e){
       return Utils.unexpectedError('Erro na chamada da função de analise de críticas: ', e.message);
     };
-
   };
 
   async fMARCARA_INPUT_SOMENTE_LETRAS(){
-
     $(function(){
         var regex = new RegExp('[^ a-zA-Z\b]', 'g');
         // repare a flag "g" de global, para substituir todas as ocorrências
@@ -558,9 +543,7 @@ class Controller{
   };
 
   async fTECLA_PRESSIONADA(document){
-
     $(document).keyup(async (e)=>{
-
       if(e.which == 27){
         console.log('Esc Pressionado!');
         if($("#fluigModalDetalhesRecebimento").length > 0){
@@ -569,9 +552,6 @@ class Controller{
           await this.loadTable(this.DATA_FORMATRMS,this.STATUS_ATIVIDADE,this.FILIAL_SEMDIG);
         };
       };//final if/else;
-
     });
-
   };
-
 };

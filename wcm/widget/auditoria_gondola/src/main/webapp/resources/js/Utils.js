@@ -397,42 +397,6 @@ class Utils {
 
     /* Function Dataset - consulta tabelas de usuários e senha pra startar processo*/
     static fGETUSER_STARTPROCESS_CLASSICO(vNOMEPROCESS){
-
-        var objLacoParaReuso = {    
-        /*
-
-            if (vGETUSER.length > 0){
-            log.info("[ds_ROBO_DE_CARCACAS] vGETUSER.length: "+vGETUSER.length+"!.");
-                for (var a = 0; a < vGETUSER.length; a++) {
-
-                    var COD_FILIAL          = vGETUSER[a].COD_FILIAL;
-                    var DIG_FILIAL          = vGETUSER[a].DIG_FILIAL;
-                    var DESC_FILIAL         = vGETUSER[a].DESC_FILIAL;
-                    var SIGLA_FILIAL        = vGETUSER[a].SIGLA_FILIAL;
-                    var NOME_USER           = vGETUSER[a].NOME_USER;
-                    var LOGIN_USER          = vGETUSER[a].LOGIN_USER;
-                    var SENHA_USER          = vGETUSER[a].SENHA_USER;
-                    var NOME_PROCESS        = vGETUSER[a].NOME_PROCESS;
-                    var EMAIL               = vGETUSER[a].EMAIL;
-                    var MATRICULA           = vGETUSER[a].MATRICULA;
-                    var DESC_SETOR          = vGETUSER[a].DESC_SETOR;
-                    var OBSERVACAO          = vGETUSER[a].OBSERVACAO;
-
-                    log.info("[ds_ROBO_DE_CARCACAS] ");
-                    log.info("[ds_ROBO_DE_CARCACAS] COD_FILIAL: "+COD_FILIAL);
-                    log.info("[ds_ROBO_DE_CARCACAS] DIG_FILIAL: "+DIG_FILIAL);
-                    log.info("[ds_ROBO_DE_CARCACAS] DESC_FILIAL: "+DESC_FILIAL);
-                    log.info("[ds_ROBO_DE_CARCACAS] SIGLA_FILIAL: "+SIGLA_FILIAL);
-                    log.info("[ds_ROBO_DE_CARCACAS] NOME_USER: "+NOME_USER);
-                    log.info("[ds_ROBO_DE_CARCACAS] LOGIN_USER: "+LOGIN_USER);
-                    log.info("[ds_ROBO_DE_CARCACAS] SENHA_USER: "+SENHA_USER);
-                    log.info("[ds_ROBO_DE_CARCACAS] ");  
-                }
-            };//final if;
-            
-        */
-        };
-
         try {
 
             var vARRAY = {};
@@ -816,7 +780,7 @@ class Utils {
         var myLoading2 = FLUIGC.loading(window,{textMessage:'Insira seu Texto aqui!...'});
 		myLoading2.show();
         setTimeout(()=> {
-            myLoading2.hide();
+            myLoading2.hide();fSYSDATE_DDMMYYYY() 
         }, 200);
     }; //final carregamentoFluig.
 
