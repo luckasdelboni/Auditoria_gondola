@@ -4,70 +4,42 @@ class Services {
     console.log("Class Services Entrei.");
   } //final constructor;
 
-  async getRowsRecebimentosCargas(
-    PERIODO_FORMATRMS,
-    STATUS_RECEB,
-    FILIAL_SEMDIG
-  ) {
+  async getRowsRecebimentosCargas(DATA_FORMATRMS, FILIAL_SEMDIG) {
     return new Promise((resolve, reject) => {
       try {
-        //STATUS --'FC';
-        let parametros = new Array();
-        parametros.push(
-          DatasetFactory.createConstraint(
-            "GET",
-            "RECEBIMENTOS",
-            "RECEBIMENTOS",
-            ConstraintType.MUST
-          )
-        );
-        parametros.push(
-          DatasetFactory.createConstraint(
-            "PERIODO_FORMATRMS",
-            PERIODO_FORMATRMS,
-            PERIODO_FORMATRMS,
-            ConstraintType.MUST
-          )
-        );
-        parametros.push(
-          DatasetFactory.createConstraint(
-            "STATUS_RECEB",
-            STATUS_RECEB,
-            STATUS_RECEB,
-            ConstraintType.MUST
-          )
-        );
-        parametros.push(
-          DatasetFactory.createConstraint(
-            "FILIAL_SEMDIG",
-            FILIAL_SEMDIG,
-            FILIAL_SEMDIG,
-            ConstraintType.MUST
-          )
-        );
+        const constraints = [
+          DatasetFactory.createConstraint("GET", "RECEBIMENTOS", "RECEBIMENTOS", ConstraintType.MUST),
+          DatasetFactory.createConstraint("DATA_FORMATRMS", DATA_FORMATRMS, DATA_FORMATRMS, ConstraintType.MUST),
+          DatasetFactory.createConstraint("FILIAL_SEMDIG", FILIAL_SEMDIG, FILIAL_SEMDIG, ConstraintType.MUST)
+        ];
+  
         DatasetFactory.getDataset(
           "ds_consulta_painel_recebimento",
           null,
-          parametros,
+          constraints,
           null,
           {
             success: function (content) {
-              let { values } = content;
-              if (!values.length) return resolve([]);
-              if (values[0].ERRO) return reject(new Error(values[0].DETALHES));
-              return resolve(values);
+              const { values } = content;
+              if (!values.length) {
+                resolve([]);
+              } else if (values[0].ERRO) {
+                reject(new Error(values[0].DETALHES));
+              } else {
+                resolve(values);
+              }
             },
             error: function (jqXHR, textStatus, errorThrown) {
               console.error(jqXHR, textStatus, errorThrown);
-              throw reject(new Error(errorThrown));
-            },
+              reject(new Error(errorThrown));
+            }
           }
         );
       } catch (e) {
-        return reject(new Error(e));
+        reject(e);
       }
     });
-  } //final getRowsRecebimentosCargas;
+  }
 
   async getRowsRecebimentosDetalhesCargas(
     ATIVIDADE,

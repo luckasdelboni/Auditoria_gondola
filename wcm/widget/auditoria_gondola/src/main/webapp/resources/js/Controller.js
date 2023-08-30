@@ -1,6 +1,6 @@
-class Controller{
+class Controller {
 
-  constructor(obj){
+  constructor(obj) {
     console.log('Class Controller Entrei.');
     this.fLOADING();
     this.fTECLA_PRESSIONADA(document);
@@ -9,13 +9,12 @@ class Controller{
     this.alreadyStarted = false;
 
     /*   Pré-Carregamento   */
-    this.DATA_FORMATRMS = Utils.dateto_rms7_2( Utils.fSYSDATE_DDMMYYYY() );
-    this.STATUS_ATIVIDADE = "XX";
+    this.DATA_FORMATRMS = Utils.dateto_rms7_2(Utils.fSYSDATE_DDMMYYYY());
     this.FILIAL_SEMDIG = '907';
 
   };
 
-  fLOADING(){
+  fLOADING() {
 
     this.loading = FLUIGC.loading(window, {
       textMessage: 'Aguarde, consultando servidor ...',
@@ -38,24 +37,24 @@ class Controller{
 
   };
 
-  show(){
+  show() {
     this.sec.show();
   };
 
-  hide(){
+  hide() {
     this.sec.hide();
   };
 
-  async init(){
+  async init() {
     this.loading.show();
     $('.loading-text').html(`Aguarde, carregando painel...`);
 
-    if(!this.alreadyStarted){
+    if (!this.alreadyStarted) {
 
-      try{
+      try {
         this.table = await this.newTable('#tblPrincipal');
 
-      }catch(e){
+      } catch (e) {
         this.loading.hide();
         return Utils.unexpectedError('Erro ao montar nova tabela', e);
       };
@@ -64,23 +63,21 @@ class Controller{
       $('.btn-exibicaostatus').html(`TODOS <span class="caret"></span>`);
 
       //SELECIONAR STATUS
-      $(`.div-btn-exibicaostatus ul li a`).off().on('click', async (element)=>{
-        this.STATUS_ATIVIDADE = $(element.currentTarget).data('status'); // status selecionada
+      $(`.div-btn-exibicaostatus ul li a`).off().on('click', async (element) => {
         let txtExibS = $(element.currentTarget).data('nome'); // status selecionada
-        console.log('Status Selecionado: ',this.STATUS_ATIVIDADE,' ',txtExibS);
-
+        console.log('Status Selecionado: ', ' ', txtExibS);
         console.log('Opa. Troquei o status');
 
         //muda o valor de exibição do dropdown
         $('.btn-exibicaostatus').html(`${txtExibS} <span class="caret"></span>`);
 
-        await  this.loadTable(this.DATA_FORMATRMS,this.STATUS_ATIVIDADE,this.FILIAL_SEMDIG);
+        await this.loadTable(this.DATA_FORMATRMS, this.FILIAL_SEMDIG);
       });
 
       //SELECIONAR FILIAL
-      $(`.div-btn-exibicaofilial ul li a`).off().on('click', async (element)=>{
+      $(`.div-btn-exibicaofilial ul li a`).off().on('click', async (element) => {
         this.FILIAL_SEMDIG = $(element.currentTarget).data('filial'); // status selecionada
-        console.log('filial Selecionado: ',this.FILIAL_SEMDIG);
+        console.log('filial Selecionado: ', this.FILIAL_SEMDIG);
 
         console.log('Opa. Troquei a filial.');
 
@@ -88,55 +85,53 @@ class Controller{
         let txtExibF = this.FILIAL_SEMDIG;
         $('.btn-exibicaofilial').html(`${txtExibF} <span class="caret"></span>`);
 
-        await this.loadTable(this.DATA_FORMATRMS,this.STATUS_ATIVIDADE,this.FILIAL_SEMDIG);
+        await this.loadTable(this.D, this.FILIAL_SEMDIG);
       });
 
-      FLUIGC.calendar('#DATAPERIODO',{
+      FLUIGC.calendar('#DATAPERIODO', {
         pickDate: true,
         pickTime: false,
         /*defaultDate: moment().subtract(1,'months').format('DD/MM/YYYY')*/
         defaultDate: Utils.fSYSDATE_DDMMYYYY()
       });
-  
-      $('#DATAPERIODO').parent().find('.iconData').off('click').on('click', function(){
+
+      $('#DATAPERIODO').parent().find('.iconData').off('click').on('click', function () {
         $('#DATAPERIODO').focus().trigger('click');
       });
-  
-      $('#DATAPERIODO').on('change',async ()=>{
+
+      $('#DATAPERIODO').on('change', async () => {
         console.log('Opa. Troquei a data selecionada.');
         this.DATA_FORMATRMS = Utils.dateto_rms7_2($('#DATAPERIODO').val());
 
-        await this.loadTable(this.DATA_FORMATRMS,this.STATUS_ATIVIDADE,this.FILIAL_SEMDIG);
+        await this.loadTable(this.DATA_FORMATRMS, this.FILIAL_SEMDIG);
 
       });
 
-      $("tr").click(function(){
-        $('tr').not(this).css({"background-color": "white", "color": "black"});
-        $(this).css({"background-color": "#a5d6a7", "color": "red"});
+      $("tr").click(function () {
+        $('tr').not(this).css({ "background-color": "white", "color": "black" });
+        $(this).css({ "background-color": "#a5d6a7", "color": "red" });
       });
-  
+
       this.alreadyStarted = true;
 
     };//final não estou editando();
 
     this.loading.hide();
-    await this.loadTable(this.DATA_FORMATRMS,this.STATUS_ATIVIDADE,this.FILIAL_SEMDIG);
+    await this.loadTable(this.DATA_FORMATRMS, this.FILIAL_SEMDIG);
   };
 
-  async loadTable(DATA_FORMATRMS,STATUS_ATIVIDADE,FILIAL_SEMDIG){
+  async loadTable(DATA_FORMATRMS, FILIAL_SEMDIG) {
     var tableLoading = FLUIGC.loading('.tbl-item');
     tableLoading.show();
 
-    try{
-      var info = await services.getRowsRecebimentosCargas(DATA_FORMATRMS,STATUS_ATIVIDADE,FILIAL_SEMDIG);
+    try {
+      var info = await services.getRowsRecebimentosCargas(DATA_FORMATRMS, FILIAL_SEMDIG);
       if (info.length) {
         this.table.clear();
 
         console.log('Retorno a ser listado no painel: ', info);
         tableLoading.hide();
         this.table.rows.add(info).draw();
-
-        await this.fCRITICAR_RECEBIMENTOS_DATATABLE();
 
       } else {
         tableLoading.hide();
@@ -146,13 +141,13 @@ class Controller{
           type: 'info',
         });
       }
-    }catch(e){
+    } catch (e) {
       tableLoading.hide();
       return Utils.unexpectedError('Erro ao preencher a tabela', e.message);
     };
   };
 
-  async newTable(table){
+  async newTable(table) {
     // objeto com informações desta widget para iniciar a tabela
     const objInit = {
       // string de descrição da tabela (singular/plural)
@@ -165,19 +160,6 @@ class Controller{
 
       // dicionário dos dados das colunas
       objColumns: [
-        {
-          title: 'Nome Operador',
-          data: 'NOME_OPERADOR',
-          className: 'text-left text-nowrap',
-          width: '2%',
-          visible: true,
-          render: function (data, type, row, meta) {
-            if (type != 'display') return data;
-            if (!data) return '';
-
-            return `<b class="CLASS_NOME_OPERADOR_${meta.row}"> ${data} </b>`;
-          },
-        },
         {
           title: 'FILIAL',
           data: 'MVG_FILIAL',
@@ -224,18 +206,6 @@ class Controller{
             if (!data) return '';
 
             return `<b class="CLASS_MVG_COD_EAN13_${meta.row}"> ${data} </b>`;
-          },
-        },
-        {
-          title: 'Data Alocada',
-          data: 'DATA_ALOC',
-          className: 'text-left text-nowrap',
-          width: '1%',
-          render: function (data, type, row, meta) {
-            if (type != 'display') return data;
-            if (!data) return '';
-
-            return `<b class="CLASS_DATAALOCADA_${meta.row}"> ${data} </b>`;
           },
         },
         {
@@ -318,7 +288,7 @@ class Controller{
       createdRow: objInit.functionRow,
     });
 
-    dt.on('click', 'tr', function(){
+    dt.on('click', 'tr', function () {
       $(document).find('tr').removeClass("dtSelected");
       $(dt.row(this).selector.rows).addClass("dtSelected");
     });
@@ -329,9 +299,9 @@ class Controller{
 
   };
 
-  async barraFerramentas(objDt, objInit){
+  async barraFerramentas(objDt, objInit) {
     // nome do arquivo que será exportado
-    
+
     await new $.fn.dataTable.Buttons(objDt, {
       buttons: [
         {
@@ -413,65 +383,62 @@ class Controller{
 
   };
 
-  async fCLICK_DATATABLE(){
+  async fCLICK_DATATABLE() {
 
     let arrayClicado = [];
-    let tableData ;
-    let linhaNew ;
-    let textoNew ;
-    let modal ;
+    let tableData;
+    let linhaNew;
+    let textoNew;
+    let modal;
 
-    $('#tblPrincipal').on('click', 'tr', async function(event){
-      tableData = $(event).closest("tr").find("td:not(:last-child)").map(function(){
+    $('#tblPrincipal').on('click', 'tr', async function (event) {
+      tableData = $(event).closest("tr").find("td:not(:last-child)").map(function () {
         return $(this).text().trim();
       }).get();
-
-      /*============================================*/
+      
       linhaNew = $(this).closest("tr");
       textoNew = $('#tblPrincipal').DataTable().row(linhaNew).data();
-      console.log('textoNew: ',textoNew);
-      /*============================================*/
+      console.log('textoNew: ', textoNew);
+      console.log('Idx Clicado: ', $(this).index());
 
-      console.log('Idx Clicado: ',$(this).index());
       arrayClicado.length = 0;
-      if(textoNew){
+      if (textoNew) {
         arrayClicado.push({
-          OPERADOR: textoNew.OPERADOR.trim(),
-          FILIAL: textoNew.MVG_FILIAL.trim(),
-          DATA_ALTERACAO: textoNew.MVG_DAT_ALTER,
-          COD_ITEM: textoNew.MVG_COD_ITEM,
-          HORA_ALOC: textoNew.HORA_ALOC,
-          COD_BARRA: textoNew.MVG_COD_EAN13.trim(),
-          DATA_ALOCADA: textoNew.PLACA.trim(),
-          SECAO: textoNew.MVG_SECAO.trim(),
-          LOTE: textoNew.MVG_LOTE.trim(),
-          PRECO_ATUAL: textoNew.MVG_PRECO_ATUAL.trim(),
-          PRECO_NOVO: textoNew.MVG_PRECO_NOVO.trim(),
-          DESCRICAO_ITEM: textoNew.GIT_DESC_REDUZ.trim(),
+          // FILIAL: textoNew.MVG_FILIAL.trim(),
+          // DATA_ALTERACAO: textoNew.MVG_DAT_ALTER,
+          // COD_ITEM: textoNew.MVG_COD_ITEM,
+          // HORA_ALOC: textoNew.HORA_ALOC,
+          // COD_BARRA: textoNew.MVG_COD_EAN13.trim(),
+          // DATA_ALOCADA: textoNew.PLACA.trim(),
+          // SECAO: textoNew.MVG_SECAO.trim(),
+          // LOTE: textoNew.MVG_LOTE.trim(),
+          // PRECO_ATUAL: textoNew.MVG_PRECO_ATUAL.trim(),
+          // PRECO_NOVO: textoNew.MVG_PRECO_NOVO.trim(),
+          // DESCRICAO_ITEM: textoNew.GIT_DESC_REDUZ.trim(),
         });
 
       };
-      console.log('arrayClicado: ',arrayClicado);
+      console.log('arrayClicado: ', arrayClicado);
       modal = await view.fCHAMAMODAL_VIEW(arrayClicado);
     });
 
   };
 
-  async dateto_rms7_2(paramdata){
-    let anoP = paramdata.substr(6,4);
-    let mesP = paramdata.substr(3,2);
-    let diaP = paramdata.substr(0,2);
-    var data = new Date([anoP,mesP,diaP]);
+  async dateto_rms7_2(paramdata) {
+    let anoP = paramdata.substr(6, 4);
+    let mesP = paramdata.substr(3, 2);
+    let diaP = paramdata.substr(0, 2);
+    var data = new Date([anoP, mesP, diaP]);
 
-    var ano = data.getFullYear().toString().substr(2,4);
-    var anoF = (ano.length == 1) ? '0'+ano : ano;
+    var ano = data.getFullYear().toString().substr(2, 4);
+    var anoF = (ano.length == 1) ? '0' + ano : ano;
 
-    var mes = (data.getMonth()+1).toString();
-    var mesF = (mes.length == 1) ? '0'+mes : mes;
+    var mes = (data.getMonth() + 1).toString();
+    var mesF = (mes.length == 1) ? '0' + mes : mes;
 
     var dia = data.getDate().toString();
-    var diaF = (dia.length == 1) ? '0'+dia : dia;
-    
+    var diaF = (dia.length == 1) ? '0' + dia : dia;
+
     var novaData = '1' + anoF + mesF + diaF;
     //console.log('novaData: '+novaData);
 
@@ -479,77 +446,34 @@ class Controller{
 
   };//final dateto_rms7_2;
 
-  async pad(num){
+  async pad(num) {
     var res = num;
     if (num < 10) {
-            res = '0' + num;
+      res = '0' + num;
     }
     return res;
 
   };// final pad
 
-  async fCRITICAR_RECEBIMENTOS_DATATABLE(PERIODO_FORMATRMS,STATUS_RECEB,FILIAL_SEMDIG){
-    console.log('fCRITICAR_RECEBIMENTOS_DATATABLE() Entrei');
-
-    try{
-
-      /* Laço 1. ============================================= */
-      let table = $('#tblPrincipal').DataTable();
-
-      table.rows().every(async function( rowIdx, tableLoop, rowLoop ){
-        let dtrow = this.data();
-        let dtATIVIDADE = (dtrow.RCP_COD_ATIV).toString().trim();
-        let dtPARPREENCHIDO = (dtrow.PAR_PREENCHIDO).toString().trim();
-        let dtEXISTE_PAR = (dtrow.EXISTE_PAR).toString().trim();
-        let dtITENS = (dtrow.ITENS).toString().trim();
-
-        if(dtEXISTE_PAR > 0 && dtPARPREENCHIDO == 0){
-          console.log('Encontrei no registro: ',dtATIVIDADE,' PAR:',dtPARPREENCHIDO,' adicionando class cor');
-          let linha2 = table.row(rowIdx).nodes();
-          //$(linha2).css("color", "red");
-          $(linha2).addClass('tr-dtable-existepar');
-
-          await view.fNOTIFICA_WIDGET('Encontrei PAR','Na Atividade:'+dtATIVIDADE);
-
-        }else if(dtEXISTE_PAR > 0 && dtPARPREENCHIDO == dtITENS){
-          console.log('Encontrei no registro ok no datatable: ',dtATIVIDADE,' PAR:',dtPARPREENCHIDO,' adicionando class cor');
-          let linha2 = table.row(rowIdx).nodes();
-          //$(linha2).css("color", "red");
-          $(linha2).addClass('tr-dtable-existeparok');
-
-        }else if(dtEXISTE_PAR > 0 && dtPARPREENCHIDO != dtITENS){
-          console.log('Encontrei no registro parcialmente preenchidos no datatable: ',dtATIVIDADE,' PAR:',dtPARPREENCHIDO,' adicionando class cor');
-          let linha2 = table.row(rowIdx).nodes();
-          //$(linha2).css("color", "red");
-          $(linha2).addClass('tr-dtable-existeparparcial');
-
-        };
-  
-      });
-    }catch(e){
-      return Utils.unexpectedError('Erro na chamada da função de analise de críticas: ', e.message);
-    };
-  };
-
-  async fMARCARA_INPUT_SOMENTE_LETRAS(){
-    $(function(){
-        var regex = new RegExp('[^ a-zA-Z\b]', 'g');
-        // repare a flag "g" de global, para substituir todas as ocorrências
-        $('input[class="select2-search__field"][placeholder="Descricao Produto"]').bind('input', function(){
+  async fMARCARA_INPUT_SOMENTE_LETRAS() {
+    $(function () {
+      var regex = new RegExp('[^ a-zA-Z\b]', 'g');
+      // repare a flag "g" de global, para substituir todas as ocorrências
+      $('input[class="select2-search__field"][placeholder="Descricao Produto"]').bind('input', function () {
         $(this).val($(this).val().replace(regex, ''));
-        });
+      });
     });
 
   };
 
-  async fTECLA_PRESSIONADA(document){
-    $(document).keyup(async (e)=>{
-      if(e.which == 27){
+  async fTECLA_PRESSIONADA(document) {
+    $(document).keyup(async (e) => {
+      if (e.which == 27) {
         console.log('Esc Pressionado!');
-        if($("#fluigModalDetalhesRecebimento").length > 0){
+        if ($("#fluigModalDetalhesRecebimento").length > 0) {
           console.log('Fechando modal.');
           $("#fluigModalDetalhesRecebimento").modal('hide');
-          await this.loadTable(this.DATA_FORMATRMS,this.STATUS_ATIVIDADE,this.FILIAL_SEMDIG);
+          await this.loadTable(this.DATA_FORMATRMS, this.FILIAL_SEMDIG);
         };
       };//final if/else;
     });

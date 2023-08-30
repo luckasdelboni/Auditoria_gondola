@@ -1,6 +1,3 @@
-/**
- * 
- */
 class View{
 
   constructor(obj){
@@ -15,20 +12,19 @@ class View{
 
       let infoDET ;
       var modalDetalhes ;
-      var modal_ATIVIDADE = array[0].ATIVIDADE;
       var modal_FILIAL_SEMDIG = array[0].FILIAL_SEMDIG;
       var modal_DATA_FORMATRMS = array[0].DATA_FORMATRMS;
       var modal_DOCA = array[0].DOCA;
       var modal_PLACA = array[0].PLACA;
       var modal_OPERADOR = array[0].OPERADOR;
       var modal_NOMEOPERADOR = array[0].NOME_OPERADOR;
-      console.log('Class View: ATIVIDADE: '+modal_ATIVIDADE+' FILIAL_SEMDIG:'+modal_FILIAL_SEMDIG+' '+modal_DATA_FORMATRMS);
+      console.log('Class View: ATIVIDADE: '+' FILIAL_SEMDIG:'+modal_FILIAL_SEMDIG+' '+modal_DATA_FORMATRMS);
   
       var tableLoading = FLUIGC.loading('.tbl-item');
       tableLoading.show();
    
       try {
-        infoDET = await services.getRowsRecebimentosDetalhesCargas(modal_ATIVIDADE,modal_FILIAL_SEMDIG,modal_DATA_FORMATRMS);
+        infoDET = await services.getRowsRecebimentosDetalhesCargas(modal_FILIAL_SEMDIG,modal_DATA_FORMATRMS);
         if(infoDET.length){
           console.log('Retorno a ser listado no painel: ', infoDET);
           tableLoading.hide();
@@ -144,16 +140,6 @@ class View{
                         </div>
                         <div class="panel-body">
                             <div class="form-group col-md-1">
-                                <label for="txtBem">Atividade.:</label>
-                                <input type="text" name="input_atividade" id="input_atividade" class="form-control" value=" ${modal_ATIVIDADE} "/>
-                                <input type="hidden" name="input_atividade" id="input_atividade" value=" ${modal_ATIVIDADE} "/>
-                                <input type="hidden" name="input_atividade" id="input_atividade" value=" ${modal_ATIVIDADE} "/>
-                                <input type="hidden" name="input_atividade" id="input_atividade" value=" ${modal_ATIVIDADE} "/>
-                                <input type="hidden" name="input_atividade" id="input_atividade" value=" ${modal_ATIVIDADE} "/>
-                                <input type="hidden" name="input_atividade" id="input_atividade" value=" ${modal_ATIVIDADE} "/>
-                                <input type="hidden" name="input_atividade" id="input_atividade" value=" ${modal_ATIVIDADE} "/>
-                            </div>
-                            <div class="form-group col-md-1">
                                 <label for="txtDescBem">Doca:</label>  
                                 <input type="text" name="input_doca" id="input_doca" class="form-control" readonly="readonly" value=" ${modal_DOCA} "/>
                             </div>
@@ -226,7 +212,6 @@ class View{
               IDX: idx,
               FILIAL_SEMDIG: modal_FILIAL_SEMDIG,
               DATA_FORMATRMS: modal_DATA_FORMATRMS,
-              ATIVIDADE: modal_ATIVIDADE,
               DOCA: modal_DOCA,
               PLACA: modal_PLACA,
               OPERADOR: modal_OPERADOR,
@@ -260,14 +245,14 @@ class View{
               let PROD = $("#IDTD_CODPROD_"+idx).text();
               if(!(ERRO) && MSG == "OKPASS"){
                 FLUIGC.toast({
-                  title: 'Valor: '+volumeDigitado+' atualizado com sucesso! Produto:'+PROD+' Atividade:'+modal_ATIVIDADE,
+                  title: 'Valor: '+volumeDigitado+' atualizado com sucesso! Produto:'+PROD+' Atividade:',
                   message: '',
                   type: 'success',
                 });
               }else{
                 FLUIGC.toast({
                   title: '',
-                  message: 'ERRO na atualização '+ERRO+' '+MSG+' '+DETALHES+'! Produto'+PROD+' Atividade:'+modal_ATIVIDADE,
+                  message: 'ERRO na atualização '+ERRO+' '+MSG+' '+DETALHES+'! Produto'+PROD+' Atividade:',
                   type: 'error',
                 });
               };

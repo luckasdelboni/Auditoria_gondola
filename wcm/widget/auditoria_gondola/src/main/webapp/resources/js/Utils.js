@@ -382,19 +382,6 @@ class Utils {
         return dsNewDataset;
     };//final fDML_RMS();
 
-    /* Dataset */
-    static fENVIAR_EMAIL(titulo, corpo_email, destino) {
-        let obj = new com.fluig.foundation.mail.service.EMailServiceBean();
-        let subject = titulo;
-        let mensagem   = corpo_email;
-        let mailFluig  = "fluig@formosanet.com.br"
-        obj.simpleEmail(1, subject, mailFluig, destino, mensagem, "text/html");
-        log.info('');
-        log.info("[ds_ROBO_DE_CARCACAS] E-mail enviado para " + destino);
-        log.info('');
-    
-    };//final enviarEmail;
-
     /* Function Dataset - consulta tabelas de usuários e senha pra startar processo*/
     static fGETUSER_STARTPROCESS_CLASSICO(vNOMEPROCESS){
         try {
@@ -437,7 +424,6 @@ class Utils {
             };//final if
     
         } catch (error) {
-    
             log.error('[dataset_recebimento_p_a_r] cath Erro fGETUSER_STARTPROCESS_CLASSICO error: '+error);
             return false;
     

@@ -16,26 +16,31 @@ function createDataset(fields, constraints, sortFields) {
         if (constraints[i].fieldName == "DATA_FORMATRMS") {
           DATA_FORMATRMS = constraints[i].initialValue;
         }
-      } //final for;
+      } // final for;
 
-      var sql =
-        "SELECT " +
-        "MVG_FILIAL, " +
-        "MVG_DAT_ALTER, " +
-        "MVG_COD_ITEM, " +
-        "MVG_COD_EAN13, " +
-        "MVG_SECAO, " +
-        "MVG_LOTE, " +
-        "MVG_PRECO_ATUAL, " +
-        "MVG_PRECO_NOVO, " +
-        "GIT_DESC_REDUZ " +
-        "FROM FLUIG.TI_AUDITORIA_GONDOLA_MIX " +
-        "WHERE MVG_FILIAL = '" +
-        FILIAL_SEMDIG +
-        "' " +
-        "AND MVG_DAT_ALTER = '" +
-        DATA_FORMATRMS +
-        "'";
+      log.info("FILIAL_SEMDIG: " + FILIAL_SEMDIG);
+      log.info("DATA_FORMATRMS: " + inputString_para_RMS(DATA_FORMATRMS));
+
+      var sql = " SELECT " +
+        " MVG_FILIAL, " +
+        " MVG_DAT_ALTER, " +
+        " MVG_COD_ITEM, " +
+        " MVG_COD_EAN13, " +
+        " MVG_SECAO, " +
+        " MVG_LOTE, " +
+        " MVG_PRECO_ATUAL, " +
+        " MVG_PRECO_NOVO, " +
+        " GIT_DESC_REDUZ " +
+        " FROM " +
+        " FLUIG.TI_AUDITORIA_GONDOLA_MIX " +
+        " WHERE " +
+        " MVG_FILIAL = '" + FILIAL_SEMDIG + "' " +
+        " AND MVG_DAT_ALTER = '" + DATA_FORMATRMS + "'";
+
+      log.info("SQL: " + sql);
+      log.dir(sql)
+
+
       return DatasetFactory.getDataset("ds_sql_fluig", [sql], null, null);
     } else if (constraints[0].fieldName == "GET") {
       try {
@@ -51,8 +56,7 @@ function createDataset(fields, constraints, sortFields) {
           }
         } //final for;
 
-        let sql =
-          "SELECT " +
+        let sql = "SELECT " +
           "RIT_COD_ATIV AS ATIVIDADE, " +
           "to_number(GIT_COD_ITEM||GIT_DIGITO) AS CODPROD, " +
           "GIT_CODIGO_EAN13 AS EAN, " +
@@ -87,17 +91,12 @@ function createDataset(fields, constraints, sortFields) {
           "rcp_cod_oper " +
           "From RMS.AG5RECCP, RMS.AA2CTIPO " +
           "WHERE 1=1 ";
-        if (STATUS_RECEB != "XX") {
+        if (STATUS_RECEB != 'XX') {
           sql += "AND rcp_sta_recepcao = '" + STATUS_RECEB + "' ";
-        }
+        };
         /*rcp_sta_recepcao = '"+STATUS_RECEB+"' "+*/
-        sql +=
-          "AND RCP_LOJA = " +
-          FILIAL_SEMDIG +
-          " " +
-          "AND RCP_DT_ATIV = " +
-          PERIODO_FORMATRMS +
-          " " +
+        sql += "AND RCP_LOJA = " + FILIAL_SEMDIG + " " +
+          "AND RCP_DT_ATIV = " + PERIODO_FORMATRMS + " " +
           "AND TIP_CODIGO = rcp_cod_forn " +
           "AND TIP_DIGITO = rcp_DIG_forn ) CP " +
           "WHERE RIT_COD_ATIV = CP.rcp_cod_ativ " +
@@ -115,7 +114,7 @@ function createDataset(fields, constraints, sortFields) {
       } catch (e) {
         log.error(
           'Encontrei um erro em ds_audit_recebimento_cargas_widget fieldName=="GET" && initialValue=="CRITICA_RECEBIMENTOS" ERRO==>' +
-            e
+          e
         );
       }
     } else if (
@@ -223,110 +222,39 @@ function createDataset(fields, constraints, sortFields) {
           }
         } //final for;
 
-        var sql =
-          "SELECT " +
+        var sql = "SELECT " +
           "ID,FILIAL_SEMDIG,ATIVIDADE,CODPROD,EAN,DESCRICAO,EMB_PED,QTD_PED,EMB_FAT,QTD_FAT,EMB_REC,QTD_REC1,QTD_REC2,QTD_CENTRAL3,EXISTE_PAR,VALIDADE,SIT,RIT_DT_VALID_RMS,DOCA,PLACA,OPERADOR,NOME_OPERADOR,DATA_CADASTRO_TAB,DATA_ULT_ALTERACAO_TAB,USER_CADASTRO,FLG_INTEGRACAO_01,FLG_INTEGRACAO_02,FLG_EMAIL_ENVIADO,FLGATIVO " +
           "FROM ti_audit_receb_cargas_ctrl A WHERE 1=1 " +
-          "AND A.filial_semdig = '" +
-          FILIAL_SEMDIG +
-          "' " +
-          "AND A.atividade = '" +
-          ATIVIDADE +
-          "' " +
-          "AND A.DOCA = '" +
-          DOCA +
-          "' " +
-          "AND A.codprod = '" +
-          CODPROD +
-          "' " +
-          "AND A.DATA_RECEBIMENTO = '" +
-          DATA_FORMATRMS +
-          "' " +
+          "AND A.filial_semdig = '" + FILIAL_SEMDIG + "' " +
+          "AND A.atividade = '" + ATIVIDADE + "' " +
+          "AND A.DOCA = '" + DOCA + "' " +
+          "AND A.codprod = '" + CODPROD + "' " +
+          "AND A.DATA_RECEBIMENTO = '" + DATA_FORMATRMS + "' " +
           "AND A.FLGATIVO = 'A' ";
+
         var ds = DatasetFactory.getDataset("ds_sql_fluig", [sql], null, null);
         if (ds.rowsCount > 0) {
           let ID = ds.getValue(0, "ID");
           //UPDATE;
-          let queryUpdate =
-            "BEGIN UPDATE TI_AUDIT_RECEB_CARGAS_CTRL A SET A.qtd_central3 = '" +
-            VOLUME_AUDITADO +
-            "' , A.DATA_ULT_ALTERACAO_TAB = TO_DATE('" +
-            retorna_formatadoDataHoraAtual() +
-            "','DD/MM/YYYY HH24:MI:SS') , A.USER_CADASTRO = '" +
-            USUARIO_LOGADO +
-            "' WHERE 1=1 " +
-            "AND A.ID = '" +
-            ID +
-            "' " +
-            "AND A.ATIVIDADE = '" +
-            ATIVIDADE +
-            "' " +
-            "AND A.CODPROD = '" +
-            CODPROD +
-            "' ; END;";
+          let queryUpdate = "BEGIN UPDATE TI_AUDIT_RECEB_CARGAS_CTRL A SET A.qtd_central3 = '" + VOLUME_AUDITADO + "' , A.DATA_ULT_ALTERACAO_TAB = TO_DATE('" + retorna_formatadoDataHoraAtual() + "','DD/MM/YYYY HH24:MI:SS') , A.USER_CADASTRO = '" + USUARIO_LOGADO + "' WHERE 1=1 " +
+            "AND A.ID = '" + ID + "' " +
+            "AND A.ATIVIDADE = '" + ATIVIDADE + "' " +
+            "AND A.CODPROD = '" + CODPROD + "' ; END;";
 
           let rowUpdate = fDML_FLUIG(queryUpdate);
           let dsSTATUS = rowUpdate.getValue(0, "STATUS");
           let dsMSG = rowUpdate.getValue(0, "MSG");
 
           if (dsSTATUS == "OKPASS") {
-            dataset.addRow(
-              new Array(false, "OKPASS", "Registro executado com sucesso!")
-            );
+            dataset.addRow(new Array(false, "OKPASS", "Registro executado com sucesso!"));
           } else {
             dataset.addRow(new Array(true, "ERROR", dsMSG));
-          }
+          };
+
         } else {
           //INSERT;
-          let queryInsert =
-            "BEGIN INSERT INTO TI_AUDIT_RECEB_CARGAS_CTRL (FILIAL_SEMDIG,ATIVIDADE,CODPROD,EAN,DESCRICAO,EMB_PED,QTD_PED,EMB_FAT,QTD_FAT,EMB_REC,QTD_REC1,QTD_REC2,QTD_CENTRAL3,EXISTE_PAR,VALIDADE,SIT,RIT_DT_VALID_RMS,DOCA,PLACA,OPERADOR,NOME_OPERADOR,DATA_RECEBIMENTO,USER_CADASTRO) " +
-            "VALUES('" +
-            FILIAL_SEMDIG +
-            "','" +
-            ATIVIDADE +
-            "','" +
-            CODPROD +
-            "','" +
-            EAN +
-            "','" +
-            DESCRICAO +
-            "','" +
-            EMB_PED +
-            "','" +
-            QTD_PED +
-            "','" +
-            EMB_FAT +
-            "','" +
-            QTD_FAT +
-            "','" +
-            EMB_REC +
-            "','" +
-            QTD_REC1 +
-            "','" +
-            QTD_REC2 +
-            "','" +
-            VOLUME_AUDITADO +
-            "','" +
-            EXISTE_PAR +
-            "','" +
-            VALIDADE +
-            "','" +
-            SIT +
-            "','" +
-            VALIDADE_FORMATRMS +
-            "','" +
-            DOCA +
-            "','" +
-            PLACA +
-            "','" +
-            OPERADOR +
-            "','" +
-            NOME +
-            "','" +
-            DATA_FORMATRMS +
-            "','" +
-            USUARIO_LOGADO +
-            "'); END;";
+          let queryInsert = "BEGIN INSERT INTO TI_AUDIT_RECEB_CARGAS_CTRL (FILIAL_SEMDIG,ATIVIDADE,CODPROD,EAN,DESCRICAO,EMB_PED,QTD_PED,EMB_FAT,QTD_FAT,EMB_REC,QTD_REC1,QTD_REC2,QTD_CENTRAL3,EXISTE_PAR,VALIDADE,SIT,RIT_DT_VALID_RMS,DOCA,PLACA,OPERADOR,NOME_OPERADOR,DATA_RECEBIMENTO,USER_CADASTRO) " +
+            "VALUES('" + FILIAL_SEMDIG + "','" + ATIVIDADE + "','" + CODPROD + "','" + EAN + "','" + DESCRICAO + "','" + EMB_PED + "','" + QTD_PED + "','" + EMB_FAT + "','" + QTD_FAT + "','" + EMB_REC + "','" + QTD_REC1 + "','" + QTD_REC2 + "','" + VOLUME_AUDITADO + "','" + EXISTE_PAR + "','" + VALIDADE + "','" + SIT + "','" + VALIDADE_FORMATRMS + "','" + DOCA + "','" + PLACA + "','" + OPERADOR + "','" + NOME + "','" + DATA_FORMATRMS + "','" + USUARIO_LOGADO + "'); END;";
           let rowInsert = fDML_FLUIG(queryInsert);
           let dsSTATUS = rowInsert.getValue(0, "STATUS");
           let dsMSG = rowInsert.getValue(0, "MSG");
@@ -342,7 +270,7 @@ function createDataset(fields, constraints, sortFields) {
       } catch (e) {
         log.error(
           'Encontrei um erro em ds_audit_recebimento_cargas_widget catch(e) fieldName=="GET" && initialValue=="CRITICA_RECEBIMENTOS" ERRO==>' +
-            e
+          e
         );
       }
       return dataset;
@@ -383,15 +311,6 @@ function pad(num) {
 } // final pad;
 
 function fDML_FLUIG(myQuery) {
-  /* 
-    execute -> Executa qualquer tipo de instrução SQL, seja um SELECT, UPDATE, INSERT, DELETE;
-    executeQuery -> Executa uma instrução sql SELECT, no entanto diferente da execute onde era necessário executar o comando statement.getResultSet() ou preparedStatement.getResultSet() a mesma já retorna o ResultSet;
-    executeUpdate -> Executa operações como INSERT, UPDATE, DELETE, no entanto nesta operação temos como retorno o numero de linhas afetadas, não sendo necessário executar o comando statement.getUpdateCount();
-    */
-  /*
-    O método execute() serve para qualquer instrução SQL. A diferença é o tipo de retorno que ele te dá, que é um boolean - pra indicar se o comando foi executado no banco ou não. O executeQuery() te retorna um objeto ResultSet que é o conjunto de linhas lidas pelo select, e o executeUpdate() te retorna um int que é a quantidade de linhas atingidas pela instrução delete, insert ou update.
-    */
-
   var dsNewDataset = DatasetBuilder.newDataset();
   dsNewDataset.addColumn("STATUS");
   dsNewDataset.addColumn("MSG");

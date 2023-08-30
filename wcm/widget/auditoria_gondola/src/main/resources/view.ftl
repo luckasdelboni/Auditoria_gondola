@@ -46,25 +46,6 @@
                         </div>
                     </div>
 
-                    <#--  <div class="form-group col-md-2">
-                        <label>FILTRAR ATIVIDADE</label>
-                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                            <div class="btn-group div-btn-exibicaostatus" role="group">
-                                <button type="button" class="btn btn-ans dropdown-toggle btn-exibicaostatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Filtrar Atividades">FECHADAS<span class="caret"></span></button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li style="font-size: 18px;"><a href="javascript:;" data-status="FC" data-nome="FECHADA">FECHADA</a></li>
-                                    <li style="font-size: 18px;"><a href="javascript:;" data-status="AA" data-nome="ABERTA">ABERTA</a></li>
-                                    <li style="font-size: 18px;"><a href="javascript:;" data-status="DV" data-nome="ITEM_DIVERGENCIA">ITEM COM DIVERGENCIA</a></li>
-                                    <li style="font-size: 18px;"><a href="javascript:;" data-status="AO" data-nome="ALOCADA_AO_OPERADOR">ALOCADA AO OPERADOR</a></li>
-                                    <li style="font-size: 18px;"><a href="javascript:;" data-status="PS" data-nome="PRIMEIRA_CONTAGEM">PRIMEIRA CONTAGEM</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li style="font-size: 18px;"><a href="javascript:;" data-status="XX" data-nome="TODOS">TODOS</a></li>
-                                </ul>
-                            </div>
-                            <input type="hidden" class="form-control" id="FILTRAR_ATIVIDADE_DADOSTABLE" name="FILTRAR_ATIVIDADE_DADOSTABLE" readonly>
-                        </div>
-                    </div>  -->
-
                     <div class="form-group col-md-2">
                         <label>EXIBIÇÃO</label>
                         <div class="btn-group btn-group-justified" role="group" aria-label="...">
